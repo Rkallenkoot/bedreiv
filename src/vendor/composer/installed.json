@@ -1,23 +1,26 @@
 [
     {
         "name": "slim/slim",
-        "version": "2.0.0",
-        "version_normalized": "2.0.0.0",
+        "version": "2.6.2",
+        "version_normalized": "2.6.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/slimphp/Slim.git",
-            "reference": "3e95c9abbc57a8f023ab4dacebcab9dae4d9f1f0"
+            "reference": "20a02782f76830b67ae56a5c08eb1f563c351a37"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/slimphp/Slim/zipball/3e95c9abbc57a8f023ab4dacebcab9dae4d9f1f0",
-            "reference": "3e95c9abbc57a8f023ab4dacebcab9dae4d9f1f0",
+            "url": "https://api.github.com/repos/slimphp/Slim/zipball/20a02782f76830b67ae56a5c08eb1f563c351a37",
+            "reference": "20a02782f76830b67ae56a5c08eb1f563c351a37",
             "shasum": ""
         },
         "require": {
             "php": ">=5.3.0"
         },
-        "time": "2012-09-09 14:54:09",
+        "suggest": {
+            "ext-mcrypt": "Required for HTTP cookie encryption"
+        },
+        "time": "2015-03-08 18:41:17",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
