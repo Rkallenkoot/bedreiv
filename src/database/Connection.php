@@ -1,23 +1,23 @@
 <?php
 namespace database;
 
-use database\Config;
+use \config\Config;
 use PDO;
 
 class Connection {
-	public $handler;
+	public $db;
 	private static $instance;
 
 	private function __construct(){
-		$connectionString = 'mysql:host=' . Config::read('db.host') .
-		';dbname='. Config::read('db.dbname') .
-		';port=' . Config::read('db.port') .
+		$connectionString = 'mysql:host=' . Config::get('db.host') .
+		';dbname='. Config::get('db.dbname') .
+		';port=' . Config::get('db.port') .
 		';connect_timeout=15';
 
-		$user = Config::read('db.user');
-		$password = Config::read('db.password');
+		$user = Config::get('db.user');
+		$password = Config::get('db.password');
 
-		$this->handler = new PDO($connectionString, $user, $password);
+		$this->db = new PDO($connectionString, $user, $password);
 	}
 
 	/**
