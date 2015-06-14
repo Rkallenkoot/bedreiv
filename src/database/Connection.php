@@ -8,26 +8,31 @@ class Connection {
 	public $db;
 	private static $instance;
 
-	private function __construct(){
-		$connectionString = 'mysql:host=' . Config::get('db.host') .
-		';dbname='. Config::get('db.dbname') .
-		';port=' . Config::get('db.port') .
-		';connect_timeout=15';
+	protected function __construct(){
+
+		$host = Config::get('db.host');
+		$dbname = Config::get('db.dbname');
+		$port = Config::get('db.port');
+		$connectionString = "mysql:host={$host};dbname={$dbname};port={$port};charset=utf8;connect_timeout=15";
 
 		$user = Config::get('db.user');
 		$password = Config::get('db.password');
 
 		$this->db = new PDO($connectionString, $user, $password);
+
+		// Set some default attributes
+		$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+		$this->db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 	}
 
 	/**
 	 * Returns the Singleton instance of this Connection class
 	 */
 	public static function getInstance(){
-		if(null === static::$instance){
-			static::$instance == new static();
+		if(!is_object(self::$instance)){
+			self::$instance = new Connection();
 		}
-		return static::$instance;
+		return self::$instance;
 	}
 
 	/**
