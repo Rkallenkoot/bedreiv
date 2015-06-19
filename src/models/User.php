@@ -25,7 +25,6 @@ class User extends BaseModel {
 			'password' => $passwordhash,
 			'role' => $role
 			));
-
 	}
 
 }
