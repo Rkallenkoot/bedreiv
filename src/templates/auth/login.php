@@ -1,12 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="UTF-8">
-	<title>BEDREIV</title>
-</head>
-<body>
+<?php
+// echo getcwd();
+include '../templates/partials/header.php';
+include '../templates/partials/menu.php';
+?>
+<div class="container-fluid">
+<div class="row">
+<?php include '../templates/partials/sidenav.php'; ?>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 	<h1>BEDREIV - Login </h1>
-	<pre><?php //print_r($data) ?></pre>
 
 	<form action="/login" method="POST">
 	<label for="username">Username:</label>
@@ -16,5 +17,10 @@
 		<input type="submit" name="login" id="login" value="Login">
 	</form>
 
-</body>
-</html>
+</div>
+</div>
+</div>
+
+<?php
+include '../templates/partials/footer.php';
+?>
