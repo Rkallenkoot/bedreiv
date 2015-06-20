@@ -16,12 +16,13 @@ use \models\Incident;
 
 $app->get('/incidents', function() use ($app){
 
+
     $incidents = new Incident();
 
-    $result = $incidents->getAll(0,50);
+    $result = $incidents->getAll();
 
-    $app->render('incidents/show_all.php', array(
-       'data' => $result
+    $app->render('incident/show_all.php', array(
+      'data' => $result
     ));
 
 
