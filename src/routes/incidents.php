@@ -84,23 +84,22 @@ $app->get('/incident_new', function() use ($app){
 	if ($app->request()->isPost()){
 		$incidents = new Incident();
 
-        // TODO Add UserID Verification
-		$incidents->addIncident(
+        $incidents->addIncident(
+            $app->request->post('user_id'),
+            $app->request->post('omschrijving'),
+            $app->request->post('hardware_id'),
+            $app->request->post('software_id'),
+            $app->request->post('categorie_id'),
+            $app->request->post('status')
+        );
 
-			$app->request->post('omschrijving'),
-			$app->request->post('hardware_id'),
-			$app->request->post('software_id'),
-			$app->request->post('categorie_id'),
-			$app->request->post('status')
-			);
+        $app->redirect('/');
+    }
 
-		$app->redirect('/');
-	}
-
-	$app->render('incident/new.php', array(
-		'hardware' => $hardware->fetchIds(),
-		'software' => $software->fetchIdName(),
-		'categorie' => $categorie->fetchCategories()
-		));
+    $app->render('incident/new.php', array(
+        'hardware' => $hardware->fetchIds(),
+        'software' => $software->fetchIdName(),
+        'categorie' => $categorie->fetchCategories()
+    ));
 
 })->via('GET', 'POST');

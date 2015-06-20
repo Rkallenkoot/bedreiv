@@ -13,6 +13,7 @@ include '../templates/partials/menu.php';
         <div class="col-md-4">
             <h2>Nieuw incident registreren</h2>
             <form action="/incident_new" method="post" id="f_new">
+                <input name="user_id" type="hidden" value="<?php echo $data['identity']['id'];?>"/>
                 <table class="table table-responsive">
 
                     <tr>
@@ -73,15 +74,17 @@ include '../templates/partials/menu.php';
                             </select></td>
                         <td></td>
                     </tr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td><button class="btn btn-success" form="f_new">Registreren</button></td>
-                    </tr>
+
 
                 </table>
             </form>
-
+            <table class="table table-responsive">
+                <tr>
+                    <td><a href="/"><button class="btn btn-default">Terug</button></a></td>
+                    <td></td>
+                    <td><button class="btn btn-success" form="f_new">Registreren</button></td>
+                </tr>
+            </table>
 
 
         </div><!-- end col 8 -->
