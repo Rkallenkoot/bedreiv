@@ -36,9 +36,13 @@ include '../templates/partials/menu.php';
 						<td>Prioriteit:</td>
 						<td>
 							<select name="prioriteit_id">
-								<option value="1">Laag</option>
-								<option value="2">Gemiddeld</option>
-								<option value="3">Hoog</option>
+                                <?php
+                                foreach ($prioriteiten as $prioriteit){
+                                    echo "<option ";
+                                    if ($prioriteit['id'] == $data['prioriteit_id']){echo " selected ";}
+                                    echo "value=\"".$prioriteit['id']."\">".$prioriteit['naam']."</option>";
+                                }
+                                ?>
 							</select>
 						</td>
 					</tr>
@@ -103,7 +107,7 @@ include '../templates/partials/menu.php';
 						</td>
 					</tr>
 					<tr>
-						<td><a href="/incidents"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
+						<td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
 						<td><button class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
 					</tr>
 

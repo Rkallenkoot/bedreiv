@@ -31,11 +31,11 @@ $app->group('/incidents', function() use ($app){
 	// Show 1 incident
 	$app->get('/show/:id', function($id) use ($app){
 		$incident = new Incident();
-
 		$hardware = new \models\Hardware();
 		$software = new \models\Software();
 		$status = new \models\Status();
 		$user = new \models\User();
+        $prioriteiten = new \models\Prioriteit();
 
 		$result = $incident->getItemById($id);
 
@@ -45,7 +45,8 @@ $app->group('/incidents', function() use ($app){
 			'hardware' => $hardware->fetchIds(),
 			'software' => $software->fetchIdName(),
 			'status' => $status->fetchIdNames(),
-			'users' => $user->fetchUserNames()
+			'users' => $user->fetchUserNames(),
+            'prioriteiten' => $prioriteiten->fetchPriorities()
 			));
 	});
 
