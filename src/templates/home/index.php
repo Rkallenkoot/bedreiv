@@ -12,5 +12,8 @@
 	</style>
 </head>
 <body>
+<?php
+var_dump($data['identity']);
+?>
 </body>
 </html>

@@ -8,7 +8,7 @@ abstract class BaseModel {
 
 	// Holds the database connection
 	protected $conn;
-	protected $dbh;
+	public $dbh;
 
 	public function __construct(){
 		$this->conn = Connection::getInstance();

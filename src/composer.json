@@ -5,12 +5,13 @@
   "license": "proprietary",
   "authors": [
     {
-      "name": "author's name",
+      "name": "bami",
       "email": "email@example.com"
     }
   ],
   "require": {
-    "slim/slim": "2.6.2"
+    "slim/slim": "2.6.2",
+    "jeremykendall/slim-auth": "dev-develop"
   },
   "autoload": {
     "psr-0":{ "": "" }
