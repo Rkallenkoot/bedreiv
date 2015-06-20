@@ -22,7 +22,7 @@ class Incident extends BaseModel {
     public function getAll(){
 
         // Construct query
-        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id
+        $query = "select i.id, i.datum, i.datum_afgerond,i.prioriteit_id, i.workaround, i.omschrijving, i.hardware_id, i.prioriteit_id, i.software_id
                   from incident i
                   ";
 
@@ -83,6 +83,7 @@ class Incident extends BaseModel {
      */
     public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
 
+
         $query = "update incident set
                   datum_afgerond=:date_finished,
                   user_id = :user_id,
@@ -107,7 +108,7 @@ class Incident extends BaseModel {
             ':workaround' => $workaround,
             ':prio' => $priority_id,
             ':hardware_id' => $hardware_id,
-            ':software_id' => $software_id,
+            ':software_id' => $software_id == 'null' ? null : $software_id,
             ':cat_id' => $category_id,
             ':status' => $status,
             ':id' => $id

@@ -2,6 +2,8 @@
 include '../templates/partials/header.php';
 include '../templates/partials/menu.php';
 
+var_dump($data['categorie_id']);
+
 ?>
 
 <h2>Incident : <?php echo $data["id"];?></h2>
@@ -103,7 +105,7 @@ include '../templates/partials/menu.php';
                     </td>
                 </tr>
                 <tr>
-                    <td></td>
+                    <td><a href="/incidents"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
                     <td><button class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
                 </tr>
 

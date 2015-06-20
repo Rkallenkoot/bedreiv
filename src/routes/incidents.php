@@ -20,6 +20,8 @@ $app->get('/incidents', function() use ($app){
     $incidents = new Incident();
     // When we have clicked the Change button
     if ($app->request()->isPost()){
+     // Possibly not 100% optimized, yet it works
+
         $hardware = new \models\Hardware();
         $software = new \models\Software();
         $status = new \models\Status();
