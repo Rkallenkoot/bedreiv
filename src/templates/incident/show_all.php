@@ -42,7 +42,7 @@ include '../templates/partials/menu.php';
 								<td><?php echo $row["datum_afgerond"];?></td>
 								<td><?php echo $row["omschrijving"];?></td>
 								<td><?php echo $row['workaround'];?></td>
-								<td><?php echo $row['prioriteit_id'];?></td>
+								<td><?php echo $row['naam'];?></td>
 								<td><?php echo $row["hardware_id"];?></td>
 								<td><?php echo $row["software_id"];?></td>
 								<td>
