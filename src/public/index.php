@@ -69,6 +69,7 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 // we could do this with some loop, this way we have more control
 require '../routes/home.php';
 require '../routes/auth.php';
+require '../routes/incidents.php';
 
 // Run the app
 $app->run();

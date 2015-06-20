@@ -80,5 +80,42 @@ class Incident extends BaseModel {
 
     }
 
+    /*
+     * This function will update a row in the database
+     */
+    public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
+
+        $query = "update incidents set
+                  datum_afgerond=':date_finisned',
+                  user_id = ':user_id',
+                  assigned_to = ':assigned_to',
+                  omschrijving = ':omschrijving',
+                  workaround = ':workaround',
+                  prioriteit_id = ':prio',
+                  hardware_id = ':hardware_id',
+                  software_id = ':software_id',
+                  categorie_id = ':cat_id',
+                  status = ':status'
+                  where id = :id";
+
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute(array(
+
+            ':date_fin' => $date_finished,
+            ':user_id' => $user_id,
+            ':assigned_to' => $assigned_to,
+            ':omschrijving' => $description,
+            ':workaround' => $workaround,
+            ':prio' => $priority_id,
+            ':hardware_id' => $hardware_id,
+            ':software_id' => $software_id,
+            ':cat_id' => $category_id,
+            ':status' => $status,
+            ':id' => $id
+        ));
+
+    }
+
+
 
 }

@@ -1,4 +1,5 @@
 <?php
+use \models\Incident;
 /**
  * @author Kevin Lankhuizen
  *
@@ -12,22 +13,16 @@
  *  -   View incidents with common problems ( and show the probable causes )
  *
  */
-$app->map('/incidents', function() use ($app){
 
-    /*
-     * First view, list all the incidents
-     */
+$app->get('/incidents', function() use ($app){
 
+    $incidents = new Incident();
 
+    $result = $incidents->getAll(0,50);
 
+    $app->render('incidents/show_all.php', array(
+       'data' => $result
+    ));
 
-    if ($app->request()->isPost())
-    {
-
-    }
-    else
-    {
-
-    }
 
 });
