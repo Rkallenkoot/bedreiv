@@ -113,5 +113,4 @@ class Incident extends BaseModel {
 
     }
 
-
 }
