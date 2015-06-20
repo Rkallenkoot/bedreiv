@@ -92,9 +92,9 @@ $app->get('/incident_new', function() use ($app){
     if ($app->request()->isPost()){
         $incidents = new Incident();
 
-        // TODO Add UserID Verification
-        $incidents->addIncident(
 
+        $incidents->addIncident(
+            $app->request->post('user_id'),
             $app->request->post('omschrijving'),
             $app->request->post('hardware_id'),
             $app->request->post('software_id'),
