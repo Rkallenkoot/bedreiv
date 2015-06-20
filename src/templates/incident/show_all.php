@@ -46,11 +46,12 @@ include '../templates/partials/menu.php';
 								<td><?php echo $row["hardware_id"];?></td>
 								<td><?php echo $row["software_id"];?></td>
 								<td>
-									<button class="btn btn-default">
-										<a href="/incidents/show/<?php echo $row["id"];?>">
-											Wijzig
-										</a>
-									</button>
+                                    <a href="/incidents/show/<?php echo $row["id"];?>">
+                                        <button class="btn btn-default">
+                                            Wijzig
+                                        </button>
+                                    </a>
+
 								</td>
 							</tr>
 							<?php
