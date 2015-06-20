@@ -56,20 +56,16 @@ class Incident extends BaseModel {
     /*
      *   Add an incident
      */
-    public function addIncident($date_start, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
+    public function addIncident($description,$hardware_id, $software_id, $category_id, $status){
         // Construct Query
-        $query = "insert into incident (datum, datum_afgerond, user_id, assigned_to, omschrijving, workaround, prioriteit_id, hardware_id, software_id, categorie_id, status)
-                values (':date' ':date_fin' ':user_id', ':assigned_to', ':omschrijving', ':workaround', ':prio', ':hardware_id', ':software_id', ':cat_id', ':status')";
+        $query = "insert into incident ( user_id, omschrijving, prioriteit_id, hardware_id, software_id, categorie_id, status)
+                values (:user_id, :omschrijving, :prio, :hardware_id, :software_id, :cat_id, :status)";
 
         $stmt = $this->dbh->prepare($query);
         $stmt->execute(array(
-            ':date' => $date_start,
-            ':date_fin' => $date_finished,
-            ':user_id' => $user_id,
-            ':assigned_to' => $assigned_to,
+            ':user_id' => 1,
             ':omschrijving' => $description,
-            ':workaround' => $workaround,
-            ':prio' => $priority_id,
+            ':prio' => 1,
             ':hardware_id' => $hardware_id,
             ':software_id' => $software_id,
             ':cat_id' => $category_id,

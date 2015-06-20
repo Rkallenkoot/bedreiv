@@ -80,3 +80,35 @@ $app->get('/incident_update', function() use ($app){
         $app->redirect('/incidents');
     }
 })->via('GET', 'POST');
+
+
+$app->get('/incident_new', function() use ($app){
+
+    // We need to provide hardware_ids and software_ids
+    $hardware = new \models\Hardware();
+    $software = new \models\Software();
+    $categorie = new \models\Categorie();
+
+    if ($app->request()->isPost()){
+        $incidents = new Incident();
+
+        // TODO Add UserID Verification
+        $incidents->addIncident(
+
+            $app->request->post('omschrijving'),
+            $app->request->post('hardware_id'),
+            $app->request->post('software_id'),
+            $app->request->post('categorie_id'),
+            $app->request->post('status')
+        );
+
+        $app->redirect('/');
+    }
+
+    $app->render('incident/new.php', array(
+        'hardware' => $hardware->fetchIds(),
+        'software' => $software->fetchIdName(),
+        'categorie' => $categorie->fetchCategories()
+    ));
+
+})->via('GET', 'POST');

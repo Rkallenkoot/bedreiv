@@ -2,8 +2,6 @@
 include '../templates/partials/header.php';
 include '../templates/partials/menu.php';
 
-var_dump($data['categorie_id']);
-
 ?>
 
 <h2>Incident : <?php echo $data["id"];?></h2>

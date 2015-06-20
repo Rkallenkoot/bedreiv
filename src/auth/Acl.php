@@ -30,6 +30,7 @@ class Acl extends ZendAcl
 		$this->addResource('/admin');
         $this->addResource('/incidents');
         $this->addResource('/incident_update');
+        $this->addResource('/incident_new');
 
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
@@ -39,6 +40,7 @@ class Acl extends ZendAcl
 		$this->allow('guest', '/logout', $this->defaultPrivilege);
         $this->allow('member', '/incidents', array('GET', 'POST'));
         $this->allow('member', '/incident_update', array('GET', 'POST'));
+        $this->allow('member', '/incident_new', array('GET', 'POST'));
 
 		$this->allow('member', '/bami', $this->defaultPrivilege);
 
