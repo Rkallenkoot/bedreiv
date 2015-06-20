@@ -24,5 +24,11 @@ class Hardware extends BaseModel {
 		return $stmt->fetchAll();
 	}
 
+    public function fetchIds(){
+        $stmt = $this->dbh->prepare("SELECT id FROM hardware");
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
 
 }

@@ -18,6 +18,7 @@ include '../templates/partials/menu.php';
             <th>Omschrijving</th>
             <th>Hardware ID</th>
             <th>Prioriteit</th>
+            <th></th>
 
         </tr>
         </thead>
@@ -28,7 +29,11 @@ include '../templates/partials/menu.php';
         <?php
 
         foreach ($data as $row) {
-            ?><tr>
+            ?>
+            <form action="/incidents" method="post" id="<?php echo "f_".$row["id"];?>">
+                <input type="hidden" name="incident_id" value="<?php echo $row["id"];?>"/>
+            </form>
+            <tr>
                 <td><?php echo $row["id"];?></td>
                 <td><?php echo $row["datum"];?></td>
                 <td><?php echo $row["user_id"];?></td>
@@ -36,6 +41,7 @@ include '../templates/partials/menu.php';
                 <td><?php echo $row["omschrijving"];?></td>
                 <td><?php echo $row["hardware_id"];?></td>
                 <td><?php echo $row["prioriteit_id"];?></td>
+                <td><button class="btn btn-default" type="submit" form="<?php echo "f_".$row["id"];?>">Change</button></td>
             </tr>
             <?php
         }

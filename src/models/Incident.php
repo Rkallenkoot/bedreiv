@@ -40,7 +40,7 @@ class Incident extends BaseModel {
     public function getItemById($id)   {
 
         // Construct query
-        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id
+        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id
                   from incident i
                   where i.id = :id";
 
@@ -83,23 +83,24 @@ class Incident extends BaseModel {
      */
     public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
 
-        $query = "update incidents set
-                  datum_afgerond=':date_finisned',
-                  user_id = ':user_id',
-                  assigned_to = ':assigned_to',
-                  omschrijving = ':omschrijving',
-                  workaround = ':workaround',
-                  prioriteit_id = ':prio',
-                  hardware_id = ':hardware_id',
-                  software_id = ':software_id',
-                  categorie_id = ':cat_id',
-                  status = ':status'
+        $query = "update incident set
+                  datum_afgerond=:date_finished,
+                  user_id = :user_id,
+                  assigned_to = :assigned_to,
+                  omschrijving = :omschrijving,
+                  workaround = :workaround,
+                  prioriteit_id = :prio,
+                  hardware_id = :hardware_id,
+                  software_id = :software_id,
+                  categorie_id = :cat_id,
+                  status = :status
                   where id = :id";
 
         $stmt = $this->dbh->prepare($query);
+
         $stmt->execute(array(
 
-            ':date_fin' => $date_finished,
+            ':date_finished' => $date_finished,
             ':user_id' => $user_id,
             ':assigned_to' => $assigned_to,
             ':omschrijving' => $description,
@@ -112,8 +113,8 @@ class Incident extends BaseModel {
             ':id' => $id
         ));
 
-    }
 
+    }
 
 
 }

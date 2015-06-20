@@ -27,4 +27,11 @@ class User extends BaseModel {
 			));
 	}
 
+    public function fetchUserNames(){
+        $stmt = $this->dbh->prepare("SELECT id, username FROM user WHERE role='admin'");
+        $stmt->execute();
+
+        return $stmt->fetchAll();
+    }
+
 }
