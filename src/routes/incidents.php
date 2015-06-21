@@ -42,17 +42,28 @@ $app->group('/incidents', function() use ($app){
 		$user = new \models\User();
         $prioriteiten = new \models\Prioriteit();
 
-		$result = $incident->getItemById($id);
+        $identity = $app->auth->getIdentity();
+        $result = $incident->getItemById($id);
 
-		$app->render('incident/show.php', array(
-			'data' => $result,
-			'title' => "Incident - $id",
-			'hardware' => $hardware->fetchIds(),
-			'software' => $software->fetchIdName(),
-			'status' => $status->fetchIdNames(),
-			'users' => $user->fetchUserNames(),
-            'prioriteiten' => $prioriteiten->fetchPriorities()
-			));
+        /*
+         * Checking if user is the owner of the ticket OR the user is an admin
+         * If user is, show the ticket
+         * If not, send back to incidents/all
+         */
+        if ($identity['role'] == 'admin' || $identity['id'] == $result['user_id']) {
+
+            $app->render('incident/show.php', array(
+                'data' => $result,
+                'title' => "Incident - $id",
+                'hardware' => $hardware->fetchIds(),
+                'software' => $software->fetchIdName(),
+                'status' => $status->fetchIdNames(),
+                'users' => $user->fetchUserNames(),
+                'prioriteiten' => $prioriteiten->fetchPriorities()
+            ));
+        } else {
+            $app->redirect('/incidents/all');
+        }
 	});
 
 	// update incident
