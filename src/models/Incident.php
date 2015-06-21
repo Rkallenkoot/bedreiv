@@ -87,8 +87,8 @@ class Incident extends BaseModel {
         $incident = new Incident();
 
         // Construct Query
-        $query = "insert into incident ( user_id, omschrijving, prioriteit_id, hardware_id, software_id, categorie_id, status)
-                values (:user_id, :omschrijving, :prio, :hardware_id, :software_id, :cat_id, :status)";
+        $query = "insert into incident (datum, user_id, omschrijving, prioriteit_id, hardware_id, software_id, categorie_id, status)
+                values (now(), :user_id, :omschrijving, :prio, :hardware_id, :software_id, :cat_id, :status)";
 
         $stmt = $this->dbh->prepare($query);
         $stmt->execute(array(
