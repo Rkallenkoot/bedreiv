@@ -22,6 +22,7 @@ include '../templates/partials/menu.php';
 							<th>Datum Afgerond</th>
 							<th>Omschrijving</th>
 							<th>Workaround</th>
+                            <th>Status</th>
 							<th>Prioriteit</th>
 							<th>Hardware ID</th>
 							<th>Software</th>
@@ -43,6 +44,7 @@ include '../templates/partials/menu.php';
 								<td><?php echo $row["datum_afgerond"];?></td>
 								<td><?php echo $row["omschrijving"];?></td>
 								<td><?php echo $row['workaround'];?></td>
+                                <td><?php echo $row['status'];?></td>
 								<td><?php echo $row['naam'];?></td>
 								<td><?php echo $row["hardware_id"];?></td>
 								<td><?php echo $row["software_id"];?></td>
