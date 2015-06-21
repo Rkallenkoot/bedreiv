@@ -66,8 +66,9 @@ class Incident extends BaseModel {
     public function getItemById($id)   {
 
         // Construct query
-        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id
+        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving
                   from incident i
+                  join incident_opmerking io on io.incident_id = i.id
                   where i.id = :id";
 
         // Prepare statement
@@ -83,6 +84,8 @@ class Incident extends BaseModel {
      *   Add an incident
      */
     public function addIncident($user_id, $description,$hardware_id, $software_id, $category_id, $status){
+        $incident = new Incident();
+
         // Construct Query
         $query = "insert into incident ( user_id, omschrijving, prioriteit_id, hardware_id, software_id, categorie_id, status)
                 values (:user_id, :omschrijving, :prio, :hardware_id, :software_id, :cat_id, :status)";
@@ -93,34 +96,55 @@ class Incident extends BaseModel {
             ':omschrijving' => $description,
             ':prio' => 1,
             ':hardware_id' => $hardware_id,
-            ':software_id' => $software_id,
+            ':software_id' => $software_id == 'null' ? null : $software_id,
             ':cat_id' => $category_id,
             ':status' => $status
         ));
 
+        /* Insert opmerking er na */
+        $query = "insert into incident_opmerking(beschrijving, datum, incident_id) values (:beschrijving, now(), :incident_id)";
+
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute(array(
+            ':beschrijving' => 'Geen Opmerking',
+            ':incident_id' => $incident->getLastFromUser($user_id)['id']
+        ));
+
+    }
+
+    public function getLastFromUser($id) {
+        $stmt = $this->dbh->prepare("select id from incident where user_id = :id");
+        $stmt->execute(array(
+            ':id' => $id
+        ));
+
+        return $stmt->fetch();
     }
 
     /*
      * This function will update a row in the database
      */
-    public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
+    public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status, $opmerking){
 
 
-        $query = "update incident set
-                  datum_afgerond=:date_finished,
-                  user_id = :user_id,
-                  assigned_to = :assigned_to,
-                  omschrijving = :omschrijving,
-                  workaround = :workaround,
-                  prioriteit_id = :prio,
-                  hardware_id = :hardware_id,
-                  software_id = :software_id,
-                  categorie_id = :cat_id,
-                  status = :status
-                  where id = :id";
+        $query = "update incident i
+                  left join incident_opmerking io on i.id = io.incident_id
+                  set
+                  i.datum_afgerond=:date_finished,
+                  i.user_id = :user_id,
+                  i.assigned_to = :assigned_to,
+                  i.omschrijving = :omschrijving,
+                  i.workaround = :workaround,
+                  i.prioriteit_id = :prio,
+                  i.hardware_id = :hardware_id,
+                  i.software_id = :software_id,
+                  i.categorie_id = :cat_id,
+                  i.status = :status,
+                  io.beschrijving = :opmerking,
+                  io.incident_id = :ioIncidentId
+                  where i.id = :id";
 
         $stmt = $this->dbh->prepare($query);
-
         $stmt->execute(array(
 
             ':date_finished' => $date_finished,
@@ -133,7 +157,10 @@ class Incident extends BaseModel {
             ':software_id' => $software_id == 'null' ? null : $software_id,
             ':cat_id' => $category_id,
             ':status' => $status,
+            ':opmerking' => $opmerking,
+            ':ioIncidentId' => $id,
             ':id' => $id
+
         ));
 
 

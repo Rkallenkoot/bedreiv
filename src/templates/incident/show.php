@@ -106,6 +106,10 @@ include '../templates/partials/menu.php';
 							</select>
 						</td>
 					</tr>
+                    <tr>
+                        <td>Opmerking:</td>
+                        <td><textarea name="opmerking" cols="30" rows="5"><?php echo $data['beschrijving'];?></textarea></td>
+                    </tr>
 					<tr>
 						<td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
 						<td><button class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>

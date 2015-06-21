@@ -50,7 +50,7 @@ $app->group('/incidents', function() use ($app){
          * If user is, show the ticket
          * If not, send back to incidents/all
          */
-        if ($identity['role'] == 'admin' || $identity['id'] == $result['user_id']) {
+        if ($identity['role'] == 'admin') {
 
             $app->render('incident/show.php', array(
                 'data' => $result,
@@ -61,6 +61,18 @@ $app->group('/incidents', function() use ($app){
                 'users' => $user->fetchUserNames(),
                 'prioriteiten' => $prioriteiten->fetchPriorities()
             ));
+
+        } else if ($identity['id'] == $result['user_id']) {
+            $app->render('incident/show_user.php', array(
+                'data' => $result,
+                'title' => "Incident - $id",
+                'hardware' => $hardware->fetchIds(),
+                'software' => $software->fetchIdName(),
+                'status' => $status->fetchIdNames(),
+                'users' => $user->fetchUserNames(),
+                'prioriteiten' => $prioriteiten->fetchPriorities()
+            ));
+
         } else {
             $app->redirect('/incidents/all');
         }
@@ -69,24 +81,47 @@ $app->group('/incidents', function() use ($app){
 	// update incident
 	$app->post('/update', function() use ($app){
 		$incident = new Incident();
+        $temp = $incident->getItemById($app->request->post('id'));
+        if ($app->auth->getIdentity()['role'] != 'admin'){
 
-		$incident->updateIncident(
-			$app->request->post('id'),
-			$app->request->post('datum'),
-			$app->request->post('user_id'),
-			$app->request->post('assigned_to'),
-			$app->request->post('omschrijving'),
-			$app->request->post('workaround'),
-			$app->request->post('prioriteit_id'),
-			$app->request->post('hardware_id'),
-			$app->request->post('software_id'),
-			$app->request->post('categorie_id'),
-			$app->request->post('status')
-			);
 
-		// We can flash some info here about the update
-		$app->redirect('/incidents/all');
 
+            $incident->updateIncident(
+                $app->request->post('id'),
+                $app->request->post('datum'),
+                $app->request->post('user_id'),
+                $temp['assigned_to'],
+                $app->request->post('omschrijving'),
+                $app->request->post('workaround'),
+                $temp['prioriteit_id'],
+                $app->request->post('hardware_id'),
+                $app->request->post('software_id'),
+                $app->request->post('categorie_id'),
+                $temp['status'],
+                $app->request->post('opmerking')
+            );
+
+            $app->redirect('/incidents/all');
+        } else {
+
+            $incident->updateIncident(
+                $app->request->post('id'),
+                $app->request->post('datum'),
+                $app->request->post('user_id'),
+                $app->request->post('assigned_to'),
+                $app->request->post('omschrijving'),
+                $app->request->post('workaround'),
+                $app->request->post('prioriteit_id'),
+                $app->request->post('hardware_id'),
+                $app->request->post('software_id'),
+                $app->request->post('categorie_id'),
+                $app->request->post('status'),
+                $app->request->post('opmerking')
+            );
+
+            // We can flash some info here about the update
+            $app->redirect('/incidents/all');
+        }
 	});
 
 });
@@ -118,5 +153,5 @@ $app->get('/incident_new', function() use ($app){
         'software' => $software->fetchIdName(),
         'categorie' => $categorie->fetchCategories()
     ));
-
+    $app->redirect('/all');
 })->via('GET', 'POST');
