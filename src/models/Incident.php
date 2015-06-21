@@ -166,4 +166,16 @@ class Incident extends BaseModel {
 
     }
 
+    /*
+     * This function will close a ticket, and set a date
+     */
+    public function rondAf($id){
+        $stmt = $this->dbh->prepare("update incident set datum_afgerond = now(), status = 4 where id = :id");
+        $stmt->execute(array(
+            ':id' => $id
+        ));
+
+
+    }
+
 }

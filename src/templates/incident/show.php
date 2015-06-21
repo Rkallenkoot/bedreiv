@@ -89,6 +89,8 @@ include '../templates/partials/menu.php';
 								}
 								?>
 							</select>
+
+                            <button form="f_close" class="btn btn-danger">Sluit Incident</button>
 						</td>
 					</tr>
 					<tr>
@@ -118,6 +120,9 @@ include '../templates/partials/menu.php';
 
 				</table>
 			</form>
+            <form action="/incidents/close" method="post" id="f_close">
+                <input type="hidden" name="id" value="<?php echo $data['id'];?>"/>
+            </form>
 
 
 		</div><!-- end col 8 -->

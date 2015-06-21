@@ -124,6 +124,20 @@ $app->group('/incidents', function() use ($app){
         }
 	});
 
+    // Close incident
+    $app->post('/close', function() use ($app){
+        $incident = new Incident();
+        // make sure the user is authorized
+        if ($app->auth->getIdentity()['role'] == 'admin'){
+            $incident->rondAf($app->request->post('id'));
+            $app->redirect('/incidents/all');
+        }
+        else {
+            $app->redirect('/incidents/all');
+        }
+
+    });
+
 });
 
 $app->get('/incident_new', function() use ($app){
