@@ -80,7 +80,7 @@ include '../templates/partials/menu.php';
             </form>
             <table class="table table-responsive">
                 <tr>
-                    <td><a href="/"><button class="btn btn-default">Terug</button></a></td>
+                    <td><a href="/incidents/all"><button class="btn btn-default">Terug</button></a></td>
                     <td></td>
                     <td><button class="btn btn-success" form="f_new">Registreren</button></td>
                 </tr>
