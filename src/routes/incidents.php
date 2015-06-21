@@ -21,7 +21,12 @@ $app->group('/incidents', function() use ($app){
 	// Show all incidents
 	$app->get('/all', function() use ($app){
 		$incident = new Incident();
-		$result = $incident->getAll();
+        $identity = $app->auth->getIdentity();
+        if ($identity['role'] == 'admin'){
+            $result = $incident->getAll();
+        } else {
+            $result = $incident->getAllByUserId($identity['id']);
+        }
 
 		$app->render('incident/show_all.php', array(
 			'data' => $result

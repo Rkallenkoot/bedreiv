@@ -36,6 +36,30 @@ class Incident extends BaseModel {
     }
 
     /*
+   * Get all the incidents by userID or role
+   *
+   *
+   */
+    public function getAllByUserId($user_id){
+
+        // Construct query
+        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id
+                  from incident i
+                  join prioriteit p on p.id = i.prioriteit_id
+                  where i.user_id = :user_id
+                  ";
+
+        // Prepare statement
+        $stmt = $this->dbh->prepare($query);
+        $stmt->execute(array(
+            ':user_id' => $user_id
+        ));
+
+        return $stmt->fetchAll();
+    }
+
+
+    /*
      * Get a specific item from the database
      * @param id The Incident ID
      */
