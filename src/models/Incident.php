@@ -113,7 +113,7 @@ class Incident extends BaseModel {
     }
 
     public function getLastFromUser($id) {
-        $stmt = $this->dbh->prepare("select id from incident where user_id = :id");
+        $stmt = $this->dbh->prepare("select max(id) as id from incident where user_id = :id");
         $stmt->execute(array(
             ':id' => $id
         ));

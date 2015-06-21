@@ -10,7 +10,7 @@ $app->map('/login', function() use ($app){
 		$result = $app->authenticator->authenticate($username, $password);
 
 		if($result->isValid()){
-			$app->redirect('/');
+			$app->redirect('/incidents/all');
 		} else {
 			$messages = $result->getMessage();
 			$app->flashNow('error', $messages[0]);

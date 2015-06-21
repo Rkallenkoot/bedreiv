@@ -145,7 +145,7 @@ $app->get('/incident_new', function() use ($app){
             $app->request->post('status')
         );
 
-        $app->redirect('/');
+        $app->redirect('incidents/all');
     }
 
     $app->render('incident/new.php', array(
@@ -153,5 +153,4 @@ $app->get('/incident_new', function() use ($app){
         'software' => $software->fetchIdName(),
         'categorie' => $categorie->fetchCategories()
     ));
-    $app->redirect('/all');
 })->via('GET', 'POST');
