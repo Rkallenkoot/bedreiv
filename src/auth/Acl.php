@@ -42,7 +42,7 @@ class Acl extends ZendAcl
 		$this->allow('guest', '/logout', $this->defaultPrivilege);
 
 		// Incidents
-		$this->allow('member', '/incidents/all', $this->defaultPrivilege);
+		$this->allow('admin', '/incidents/all', $this->defaultPrivilege);
 		$this->allow('member', '/incidents/show/:id', $this->defaultPrivilege);
 		$this->allow('member', '/incidents/update', array('POST'));
 

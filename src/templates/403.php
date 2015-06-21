@@ -7,11 +7,11 @@
 		html {
 			width:100%;
 			height:100%;
-			background:url(img/logo.png) center center no-repeat;
+			background:url(/img/logo.png) center center no-repeat;
 		}
 	</style>
 </head>
 <body>
-	<h1>403 - Forbidden </h1>
+	<h1 style="text-align:center">403 - Forbidden </h1>
 </body>
 </html>
