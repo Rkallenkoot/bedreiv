@@ -2,6 +2,8 @@
 use \models\Vragenlijst;
 
 // Homepage Router
-$app->get('/vragenlijst', function() use ($app){
-	$app->render('vragenlijst/startpage.php');
+$app->get('/questionnaire/:id', function($id) use ($app){
+	$app->render('questionnaire/questionnaire.php', array(
+			'questionnumber' => $id
+		));
 });
