@@ -12,7 +12,7 @@ $app->map('/login', function() use ($app){
 		if($result->isValid()){
 			$app->redirect('/');
 		} else {
-			$messages = $result->getMessage();
+			$messages = $result->getMessages();
 			$app->flashNow('error', $messages[0]);
 		}
 	}
