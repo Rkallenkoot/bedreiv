@@ -70,7 +70,7 @@ class Incident extends BaseModel {
         // Construct query
         $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving
                   from incident i
-                  join incident_opmerking io on io.incident_id = i.id
+                  left join incident_opmerking io on io.incident_id = i.id
                   where i.id = :id";
 
         // Prepare statement
