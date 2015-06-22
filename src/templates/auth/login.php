@@ -3,6 +3,7 @@
 include '../templates/partials/header.php';
 include '../templates/partials/menu.php';
 ?>
+
 <div class="container">
 	<div class="row">
 		<div class="col-lg-6 col-lg-offset-3">
@@ -30,7 +31,6 @@ include '../templates/partials/menu.php';
 				<p class="bg-danger"><?=$flash['error']?></p>
 			<?php endif; ?>
 		</div>
-
 	</div>
 </div>
 

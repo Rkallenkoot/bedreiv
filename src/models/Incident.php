@@ -22,8 +22,10 @@ class Incident extends BaseModel {
     public function getAll(){
 
         // Construct query
-        $query = "select i.id, i.datum, i.datum_afgerond,i.prioriteit_id, i.workaround, i.omschrijving, i.hardware_id, i.prioriteit_id, i.software_id
+        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id
                   from incident i
+                  join prioriteit p on p.id = i.prioriteit_id
+
                   ";
 
         // Prepare statement
