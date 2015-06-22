@@ -22,10 +22,11 @@ class Incident extends BaseModel {
     public function getAll(){
 
         // Construct query
-        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status
+        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status, i.status as status_id
                   from incident i
                   join prioriteit p on p.id = i.prioriteit_id
                   left join status s on s.id = i.status
+                  order by status_id asc, i.datum desc
 
                   ";
 
@@ -103,7 +104,7 @@ class Incident extends BaseModel {
             ':hardware_id' => $hardware_id,
             ':software_id' => $software_id == 'null' ? null : $software_id,
             ':cat_id' => $category_id,
-            ':status' => $status
+            ':status' => 1
         ));
 
         /* Insert opmerking er na */
