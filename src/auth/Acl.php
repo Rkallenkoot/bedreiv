@@ -35,6 +35,14 @@ class Acl extends ZendAcl
 		$this->addResource('/incident_new');
         $this->addResource('/incidents/close');
 
+        // configs
+        $this->addResource('/configs/hardware/all');
+        $this->addResource('/configs/hardware/create');
+        $this->addResource('/configs/hardware/show/:id');
+        $this->addResource('/configs/hardware/update');
+        $this->addResource('/configs/hardware/delete');
+
+
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
 		// The third argument is 'privilege'. In Slim Auth privilege == HTTP method
@@ -50,6 +58,7 @@ class Acl extends ZendAcl
         $this->allow('admin', '/incidents/close', array('POST'));
 
 
+        // Configs
 		$this->allow('member', '/bami', $this->defaultPrivilege);
 
 
