@@ -15,23 +15,45 @@ class User extends BaseModel {
 		return $stmt->fetch();
 	}
 
-	public function insertUser($username, $passwordhash, $role){
-		$stmt = $this->dbh->prepare("INSERT INTO user (username, password, role)
+	/**
+		* Fetches all users excluding the password ( for obvious reasons )
+		* @param $order Order of the list defaults to 'ASC'
+		*/
+		public function fetchAll($by = 'username', $order = 'ASC'){
+			$stmt = $this->dbh->prepare("SELECT id, username, role FROM user ORDER BY :username :order");
+
+			$stmt->execute(array(
+				':username' => $username,
+				':order' => $order));
+			return $stmt->fetchAll();
+		}
+
+		public function fetchRoles(){
+			$stmt = $this->dbh->prepare("SELECT DISTINCT role from user ORDER BY role DESC");
+			$stmt->execute();
+			return $stmt->fetchAll();
+		}
+
+		public function insertUser($username, $password, $role){
+			$stmt = $this->dbh->prepare("INSERT INTO user (username, password, role)
 				VALUES (:username, :password, :role)");
 
+		// Hash password
+			$passwordhash = password_hash($password, PASSWORD_DEFAULT);
+
 		// Returns true when inserted succesfully
-		return $stmt->execute(array(
-			'username' => $username,
-			'password' => $passwordhash,
-			'role' => $role
-			));
+			return $stmt->execute(array(
+				'username' => $username,
+				'password' => $passwordhash,
+				'role' => $role
+				));
+		}
+
+		public function fetchUserNames(){
+			$stmt = $this->dbh->prepare("SELECT id, username FROM user WHERE role='admin'");
+			$stmt->execute();
+
+			return $stmt->fetchAll();
+		}
+
 	}
-
-    public function fetchUserNames(){
-        $stmt = $this->dbh->prepare("SELECT id, username FROM user WHERE role='admin'");
-        $stmt->execute();
-
-        return $stmt->fetchAll();
-    }
-
-}
