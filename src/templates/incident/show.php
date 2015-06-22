@@ -20,6 +20,10 @@ include '../templates/partials/menu.php';
 						<td>Geplaatst op:</td>
 						<td><?php echo $data['datum'];?></td>
 					</tr>
+                    <tr>
+                        <td>Geplaatst door:</td>
+                        <td><?php echo $data['username'];?></td>
+                    </tr>
 					<tr>
 						<td>Datum afgerond:</td>
 						<td><input type="datetime" name="datum" value="<?php echo $data['datum'];?>"/></td>

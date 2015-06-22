@@ -47,6 +47,7 @@ class Incident extends BaseModel {
         $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status
                   from incident i
                   join prioriteit p on p.id = i.prioriteit_id
+
                   left join status s on s.id = i.status
                   where i.user_id = :user_id
                   ";
@@ -68,8 +69,9 @@ class Incident extends BaseModel {
     public function getItemById($id)   {
 
         // Construct query
-        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving, s.naam as statusnaam
+        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, u.username, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving, s.naam as statusnaam
                   from incident i
+                  join user u on u.id = i.user_id
                   left join incident_opmerking io on io.incident_id = i.id
                   join status s on s.id = i.status
                   where i.id = :id";
