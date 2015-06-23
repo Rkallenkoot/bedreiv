@@ -1,5 +1,4 @@
 composer.lock
-src/config.php
 *.asta.lock
 *.xml
 *.iml
