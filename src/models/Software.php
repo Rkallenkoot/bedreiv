@@ -10,18 +10,18 @@ class Software extends BaseModel {
 		 * Fetch Software by $id
 		 */
 		public function findById($id){
-				$stmt = $this->dbh->prepare("SELECT * FROM software WHERE id = :id");
-				$stmt->execute(array(
-						':id' => $id));
+			$stmt = $this->dbh->prepare("SELECT * FROM software WHERE id = :id");
+			$stmt->execute(array(
+				':id' => $id));
 
-				return $stmt->fetch();
+			return $stmt->fetch();
 		}
 
 		public function fetchAll(){
-				$stmt = $this->dbh->prepare("SELECT * FROM software");
-				$stmt->execute();
+			$stmt = $this->dbh->prepare("SELECT * FROM software");
+			$stmt->execute();
 
-				return $stmt->fetchAll();
+			return $stmt->fetchAll();
 		}
 
 		public function fetchAllJoined(){
@@ -31,11 +31,26 @@ class Software extends BaseModel {
 			return $stmt->fetchAll();
 		}
 
-		public function fetchIdName(){
-				$stmt = $this->dbh->prepare("SELECT id, uitgebreide_naam FROM software");
-				$stmt->execute();
-
+		public function fetchExcludedByHardwareId($id){
+			$query = "SELECT distinct s.id, s.uitgebreide_naam as 'naam'
+			from software s join hardware_software hs on (hs.software_id = s.id)
+			where s.id NOT IN (
+				SELECT software_id from hardware_software where hardware_id = :id)";
+			$stmt = $this->dbh->prepare($query);
+			try {
+				$stmt->execute(array(
+					':id' => $id));
 				return $stmt->fetchAll();
+			} catch(\PDOException $ex){
+				return array();
+			}
+		}
+
+		public function fetchIdName(){
+			$stmt = $this->dbh->prepare("SELECT id, uitgebreide_naam FROM software");
+			$stmt->execute();
+
+			return $stmt->fetchAll();
 		}
 
 		// Insert software
@@ -44,10 +59,10 @@ class Software extends BaseModel {
 			$stmt = $this->dbh->prepare($query);
 			try {
 				return array($stmt->execute(array(
-				':id' => $id,
-				':naam' => $naam,
-				':soort' => $soort,
-				':aantal' => $aantal_licenties)));
+					':id' => $id,
+					':naam' => $naam,
+					':soort' => $soort,
+					':aantal' => $aantal_licenties)));
 			} catch (\PDOException $ex){
 				return array(false, $ex->getMessage());
 			}
@@ -85,4 +100,4 @@ class Software extends BaseModel {
 			}
 		}
 
-}
+	}

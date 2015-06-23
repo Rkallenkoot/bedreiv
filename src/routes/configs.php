@@ -40,7 +40,7 @@ $app->group('/configs', function() use ($app){
 		$result = $hardware->fetchByID($id);
 
 		$software = new Software();
-		$softwares = $software->fetchAllJoined();
+		$softwares = $software->fetchExcludedByHardwareId($id);
 
 		$hwsw = new HardwareSoftware();
 		$attachedSW = $hwsw->findByHardwareId($id);

@@ -125,7 +125,7 @@ include '../templates/partials/menu.php';
 							</select>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-block btn-success">Koppeling Opslaan</button>
+					<button type="submit" class="btn btn-block btn-success"<?php echo (!count($software))? 'disabled':'';?>>Koppeling Opslaan</button>
 				</form>
 
 			</div>
