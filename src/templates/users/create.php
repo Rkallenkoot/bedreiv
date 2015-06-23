@@ -44,6 +44,9 @@ include '../templates/partials/menu.php';
 					</div>
 				</div>
 			</form>
+			<?php if($flash['error']): ?>
+				<p class="bg-danger"><?=$flash['error']?></p>
+			<?php endif;?>
 		</div>
 	</div>
 </div>

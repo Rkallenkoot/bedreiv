@@ -20,10 +20,10 @@ class User extends BaseModel {
 		* @param $order Order of the list defaults to 'ASC'
 		*/
 		public function fetchAll($by = 'username', $order = 'ASC'){
-			$stmt = $this->dbh->prepare("SELECT id, username, role FROM user ORDER BY :username :order");
+			$stmt = $this->dbh->prepare("SELECT id, username, role, created FROM user ORDER BY :username :order");
 
 			$stmt->execute(array(
-				':username' => $username,
+				':username' => $by,
 				':order' => $order));
 			return $stmt->fetchAll();
 		}
@@ -38,15 +38,56 @@ class User extends BaseModel {
 			$stmt = $this->dbh->prepare("INSERT INTO user (username, password, role)
 				VALUES (:username, :password, :role)");
 
-		// Hash password
+			// Hash password
 			$passwordhash = password_hash($password, PASSWORD_DEFAULT);
 
-		// Returns true when inserted succesfully
+			// Returns true when inserted succesfully
 			return $stmt->execute(array(
-				'username' => $username,
-				'password' => $passwordhash,
-				'role' => $role
+				':username' => $username,
+				':password' => $passwordhash,
+				':role' => $role
 				));
+		}
+
+		public function update($id, $username, $role, $password){
+			$passwordHash = password_hash($password, PASSWORD_DEFAULT);
+
+			$stmt = $this->dbh->prepare("UPDATE user
+				set username = :username,
+				role = :role,
+				password = :password
+				where id = :id");
+
+			return $stmt->execute(array(
+				':username' => $username,
+				':role' => $role,
+				':password' => $passwordHash,
+				':id' => $id));
+		}
+
+		public function fetchByID($id){
+			$stmt = $this->dbh->prepare("SELECT id, username, role, created from user where id = :id");
+
+			$stmt->execute(array(':id' => $id));
+			return $stmt->fetch();
+		}
+
+		public function delete($id){
+			// check admin user
+			$stmt = $this->dbh->prepare("SELECT id from user where username = 'admin'");
+			$stmt->execute();
+
+			$admin = $stmt->fetch();
+			if($id == $admin['id']) {
+				return false;
+			}
+
+			$stmt = $this->dbh->prepare("DELETE FROM user WHERE id = :id");
+
+			return $stmt->execute(array(
+				':id' => $id
+				));
+
 		}
 
 		public function fetchUserNames(){

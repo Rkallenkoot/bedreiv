@@ -56,10 +56,13 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 	$hasIdentity = $app->auth->hasIdentity();
 	$identity = $app->auth->getIdentity();
 	$role = ($hasIdentity) ? $identity['role'] : 'guest';
+
+	$uri = $app->request()->getResourceUri();
 	$data = array(
 		'hasIdentity' => $hasIdentity,
 		'role' =>  $role,
-		'identity' => $identity
+		'identity' => $identity,
+		'uri' => $uri
 		);
 	$app->view->appendData($data);
 });

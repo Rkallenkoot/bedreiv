@@ -6,7 +6,11 @@ $app->group('/users', function() use ($app){
 
 	// Shows all the users
 	$app->get('/all', function() use ($app){
-		$app->render('users/all.php');
+		$user = new User();
+		$users = $user->fetchAll();
+
+		$app->render('users/index.php', array(
+			'users' => $users));
 	});
 
 	// Shows form to create a new user
@@ -45,10 +49,47 @@ $app->group('/users', function() use ($app){
 		// Redirect naar alle users overzicht
 	});
 
+	// Update the user
+	$app->post('/update', function() use ($app){
+		$user = new User();
+
+		$id = $app->request->post('id');
+
+		$result = $user->update(
+			$id,
+			$app->request->post('username'),
+			$app->request->post('role'),
+			$app->request->post('password')
+			);
+
+		if(!$result){
+			$app->flash('error', "Updaten is mislukt");
+			$app->redirect("/users/show/$id");
+		}
+
+		$app->redirect('/users/all');
+	});
+
 
 	// Shows individual user
-	$app->get('/show/:id', function() use ($app){
+	$app->get('/show/:id', function($id) use ($app){
+		$user = new User();
+		$userRoles = $user->fetchRoles();
+		$userInfo = $user->fetchByID($id);
 
+		$app->render('users/show.php', array(
+			'roles' => $userRoles,
+			'user' => $userInfo
+			));
+
+	});
+
+	$app->post('/delete', function() use ($app){
+		$id = $app->request->post('id');
+		$user = new User();
+		$user->delete($id);
+
+		$app->redirect('/users/all');
 	});
 
 
