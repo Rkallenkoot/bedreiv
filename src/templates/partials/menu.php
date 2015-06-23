@@ -17,15 +17,15 @@
 					<li><a href="/logout">
 						<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> Logout</a>
 					</li>
-			<?php else: ?>
-				<li><a href="/login">
-					<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
-					Login
-				</a>
-			</li>
-		<?php endif;?>
-	</ul>
-</div>
+				<?php else: ?>
+					<li><a href="/login">
+						<span class="glyphicon glyphicon-log-in" aria-hidden="true"></span>
+						Login
+					</a>
+				</li>
+			<?php endif;?>
+		</ul>
+	</div>
 
 </div>
 </nav>
