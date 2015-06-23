@@ -59,7 +59,8 @@ $app->group('/incidents', function() use ($app){
                 'software' => $software->fetchIdName(),
                 'status' => $status->fetchIdNames(),
                 'users' => $user->fetchUserNames(),
-                'prioriteiten' => $prioriteiten->fetchPriorities()
+                'prioriteiten' => $prioriteiten->fetchPriorities(),
+                'comparison' => $incident->compareIncidents($id, $result['software_id'], $result['hardware_id'], $result['omschrijving'])
             ));
 
         } else if ($identity['id'] == $result['user_id']) {
