@@ -11,6 +11,10 @@ body {
 p.bg-danger {
 	padding: 15px;
 }
+p.bg-success{
+	padding:15px;
+}
+
 span.label {
 	padding:8px;
 }
