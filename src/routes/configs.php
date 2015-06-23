@@ -5,6 +5,7 @@ use \models\Locatie;
 use \models\Merk;
 use \models\Relatie;
 use \models\Software;
+use \models\HardwareSoftware;
 
 
 use \JeremyKendall\Slim\Auth\HttpForbiddenException;
@@ -38,13 +39,20 @@ $app->group('/configs', function() use ($app){
 		$hardware = new Hardware();
 		$result = $hardware->fetchByID($id);
 
+		$software = new Software();
+		$softwares = $software->fetchAllJoined();
+
+		$hwsw = new HardwareSoftware();
+		$attachedSW = $hwsw->findByHardwareId($id);
+
 		$app->render('config/show.php', array(
 			'hardware' => $result,
 			'soorten' => $soorten,
 			'locaties' => $locaties,
 			'merken' => $merken,
-			'relaties' => $relaties
-			));
+			'relaties' => $relaties,
+			'attachedSW' => $attachedSW[1],
+			'software' => $softwares));
 
 	});
 
@@ -88,6 +96,40 @@ $app->group('/configs', function() use ($app){
 			);
 
 		$app->redirect('/configs/hardware/all');
+	});
+
+	$app->post('/hardware/attach', function() use ($app){
+		$hwid = $app->request->post('hwid');
+		$swid = $app->request->post('swid');
+
+		if($hwid == "" || $swid == ""){
+			$app->flash('error', "Er is iets foutgegaan!");
+			$app->redirect("/configs/hardware/all");
+		}
+
+		// Inserten die HWSW
+		$hwsw = new HardwareSoftware();
+		$hwsw->insert($hwid, $swid);
+
+		$app->flash('success', "$swid is succesvol gekoppeld aan $hwid!");
+		$app->redirect("/configs/hardware/show/$hwid");
+	});
+
+	$app->post('/hardware/detach', function() use ($app){
+		$hwid = $app->request->post('hwid');
+		$swid = $app->request->post('swid');
+
+		if($hwid == "" || $swid == ""){
+			$app->flash('error', "Er is iets foutgegaan!");
+			$app->redirect("/configs/hardware/all");
+		}
+
+		// Inserten die HWSW
+		$hwsw = new HardwareSoftware();
+		$hwsw->delete($hwid, $swid);
+
+		$app->flash('success', "$swid is succesvol ontkoppeld van $hwid!");
+		$app->redirect("/configs/hardware/show/$hwid");
 	});
 
 	$app->post('/hardware/update', function() use ($app){

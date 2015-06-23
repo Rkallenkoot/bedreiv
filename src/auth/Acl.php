@@ -50,6 +50,9 @@ class Acl extends ZendAcl
 		$this->addResource('/configs/hardware/show/:id');
 		$this->addResource('/configs/hardware/update');
 		$this->addResource('/configs/hardware/delete');
+		$this->addResource('/configs/hardware/attach');
+		$this->addResource('/configs/hardware/detach');
+
 		// Software
 		$this->addResource('/configs/software/all');
 		$this->addResource('/configs/software/create');
