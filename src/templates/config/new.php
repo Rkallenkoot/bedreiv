@@ -87,3 +87,7 @@ include '../templates/partials/menu.php';
 
 	</div>
 </div>
+
+<?php
+include '../templates/partials/footer.php';
+?>

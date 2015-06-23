@@ -1,4 +1,4 @@
-<?php 
+<?php
 use \models\Hardware;
 use \models\Soort;
 use \models\Locatie;
@@ -9,7 +9,7 @@ use \models\Relatie;
 use \JeremyKendall\Slim\Auth\HttpForbiddenException;
 
 $app->group('/configs', function() use ($app){
-	
+
 	$app->get("/hardware/all", function() use ($app){
 
 		$hardware = new Hardware();
@@ -22,12 +22,27 @@ $app->group('/configs', function() use ($app){
 	});
 
 	$app->get("/hardware/show/:id", function($id) use ($app){
+		$soort = new Soort();
+		$soorten = $soort->fetchAll();
+
+		$locatie = new Locatie();
+		$locaties = $locatie->fetchAll();
+
+		$merk = new Merk();
+		$merken = $merk->fetchAll();
+
+		$relatie = new Relatie();
+		$relaties = $relatie->fetchAll();
+
 		$hardware = new Hardware();
 		$result = $hardware->fetchByID($id);
 
-
 		$app->render('config/show.php', array(
 			'hardware' => $result,
+			'soorten' => $soorten,
+			'locaties' => $locaties,
+			'merken' => $merken,
+			'relaties' => $relaties
 			));
 
 	});
@@ -47,7 +62,7 @@ $app->group('/configs', function() use ($app){
 		$relaties = $relatie->fetchAll();
 
 		$app->render('config/new.php', array(
-			'soorten' => $soorten, 
+			'soorten' => $soorten,
 			'locaties'=> $locaties,
 			'merken' => $merken,
 			'relaties' => $relaties));
@@ -72,7 +87,35 @@ $app->group('/configs', function() use ($app){
 			);
 
 		$app->redirect('/configs/hardware/all');
+	});
 
+	$app->post('/hardware/update', function() use ($app){
+		$id = $app->request->post('id');
+
+		if($id == ""){
+			$app->flash("Error", "Hardware id is niet ingevuld.");
+			$app->redirect("/configs/hardware/show/$id");
+		}
+
+		// Update hardware
+		$hardware = new Hardware();
+
+		$result = $hardware->update(
+			$id,
+			$app->request->post('jaarvanaanschaf'),
+			$app->request->post('soort'),
+			$app->request->post('merk'),
+			$app->request->post('locatie'),
+			$app->request->post('relatie')
+			);
+
+		// Als update is mislukt
+		if(!$result){
+			$app->flash('error', "Updaten is mislukt");
+			$app->redirect("/configs/hardware/show/$id");
+		}
+
+		$app->redirect('/configs/hardware/all');
 
 	});
 
