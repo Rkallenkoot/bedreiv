@@ -2,6 +2,7 @@
 use \config\Config;
 use \database\Connection;
 use \auth\Acl;
+use \models\Incident;
 
 use JeremyKendall\Password\PasswordValidator;
 use JeremyKendall\Slim\Auth\Adapter\Db\PdoAdapter;
@@ -58,11 +59,16 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 	$role = ($hasIdentity) ? $identity['role'] : 'guest';
 
 	$uri = $app->request()->getResourceUri();
+
+	$incident = new Incident();
+	$openstaand = $incident->fetchOpenCount();
+
 	$data = array(
 		'hasIdentity' => $hasIdentity,
 		'role' =>  $role,
 		'identity' => $identity,
-		'uri' => $uri
+		'uri' => $uri,
+		'open' => $openstaand['open']
 		);
 	$app->view->appendData($data);
 });
