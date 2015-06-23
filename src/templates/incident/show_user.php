@@ -21,6 +21,10 @@ include '../templates/partials/menu.php';
                         <td><?php echo $data['datum'];?></td>
                     </tr>
                     <tr>
+                        <td>Status :</td>
+                        <td><?php echo $data['statusnaam'];?></td>
+                    </tr>
+                    <tr>
                         <td>Omschrijving:</td>
                         <td><textarea name="omschrijving" cols="30" rows="5"><?php echo $data['omschrijving'];?></textarea></td>
                     </tr>
@@ -59,7 +63,7 @@ include '../templates/partials/menu.php';
                     </tr>
                     <tr>
                         <td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
-                        <td><button class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
+                        <td><button <?php  if ( $data['status'] == 4 ){echo ' disabled ';}?>class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
                     </tr>
 
 
