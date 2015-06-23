@@ -7,7 +7,7 @@ include '../templates/partials/menu.php';
 
 <div class="container-fluid">
 	<div class="row"><button class="btn btn-danger btn-success btn-default btn-info btn-warning"></button>
-<?php include '../templates/partials/sidenav.php'; ?>
+		<?php include '../templates/partials/sidenav.php'; ?>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h2 class="sub-header">Incidenten <a class="pull-right" href="/incident_new"><button class="btn btn-success">Nieuw Incident Registreren</button></a> </h2>
@@ -23,7 +23,7 @@ include '../templates/partials/menu.php';
 							<th>Datum Afgerond</th>
 							<th>Omschrijving</th>
 							<th>Workaround</th>
-                            <th>Status</th>
+							<th>Status</th>
 							<th>Prioriteit</th>
 							<th>Hardware ID</th>
 							<th>Software</th>
@@ -38,40 +38,43 @@ include '../templates/partials/menu.php';
 						<?php
 
 						foreach ($data as $row) {
-                            // Fancy buttons showing status
-                            switch ($row['status']){
-                                case 'Nieuw':
-                                    $button = 'btn btn-info';
-                                    break;
-                                case 'Bezig':
-                                    $button = 'btn btn-warning';
-                                    break;
-                                case 'Opgelost':
-                                    $button = 'btn btn-success';
-                                    break;
+							// Fancy buttons showing status
+							switch ($row['status']){
+								case 'Nieuw':
+								$lbl = 'label label-info';
+								break;
+								case 'Bezig':
+								$lbl = 'label label-warning';
+								break;
+								case 'Opgelost':
+								$lbl = 'label label-success';
+								break;
 
-                                default:
-                                    $button = 'btn btn-danger';
-                                    break;
-                            }
+								default:
+								$lbl = 'label label-danger';
+								break;
+							}
 							?>
 
-							<tr></button>
+							<tr>
 								<td><?php echo $row["id"];?></td>
 								<td><?php echo $row["datum"];?></td>
 								<td><?php echo $row["datum_afgerond"];?></td>
 								<td><?php echo $row["omschrijving"];?></td>
 								<td><?php echo $row['workaround'];?></td>
-                                <td><?php echo '<button disabled class="'.$button.'">'.$row['status'].'</button>';?></td>
+
+								<td>
+									<?php echo "<span class=\"$lbl\">$row[status]</span>";?>
+								</td>
 								<td><?php echo $row['naam'];?></td>
 								<td><?php echo $row["hardware_id"];?></td>
 								<td><?php echo $row["software_id"];?></td>
 								<td>
-                                    <a href="/incidents/show/<?php echo $row["id"];?>">
-                                        <button class="btn btn-default">
-                                            Wijzig
-                                        </button>
-                                    </a>
+									<a href="/incidents/show/<?php echo $row["id"];?>">
+										<button class="btn btn-default">
+											Wijzig
+										</button>
+									</a>
 
 								</td>
 							</tr>
