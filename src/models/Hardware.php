@@ -24,11 +24,28 @@ class Hardware extends BaseModel {
 		return $stmt->fetchAll();
 	}
 
-    public function fetchIds(){
-        $stmt = $this->dbh->prepare("SELECT id FROM hardware");
-        $stmt->execute();
+	public function fetchIds(){
+		$stmt = $this->dbh->prepare("SELECT id FROM hardware");
+		$stmt->execute();
 
-        return $stmt->fetchAll();
-    }
+		return $stmt->fetchAll();
+	}
+
+	public function addHardware($hardware_id, $jaarvanaanschaf,$soort_id, $locatie_id, $merk_id, $relatie_id){
+	
+        // Construct Query
+		$query = "insert into hardware (id, jaar_van_aanschaf, soort_id, locatie_id, merk_id, relatie_id)
+		values (:hardware_id, :jaar_van_aanschaf, :soort_id, :locatie_id, :merk_id, :relatie_id)";
+
+		$stmt = $this->dbh->prepare($query);
+		$stmt->execute(array(
+			':hardware_id' => $hardware_id,
+			':jaar_van_aanschaf' => $jaarvanaanschaf,
+			':soort_id' => $soort_id,
+			':locatie_id' => $locatie_id,
+			':merk_id' => $merk_id,
+			':relatie_id' => $relatie_id
+			));
+	}
 
 }

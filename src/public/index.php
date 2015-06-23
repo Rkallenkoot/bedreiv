@@ -74,6 +74,7 @@ require '../routes/home.php';
 require '../routes/auth.php';
 require '../routes/incidents.php';
 require '../routes/users.php';
+require '../routes/configs.php';
 
 // Run the app
 $app->run();
