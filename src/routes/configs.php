@@ -13,21 +13,10 @@ $app->group('/configs', function() use ($app){
 	$app->get("/hardware/all", function() use ($app){
 
 		$hardware = new Hardware();
-		$result = $hardware->fetchAllJoined();
+		$result = $hardware->fetchAll();
 
-		$app->render('config/index.php', array(
-			'hardware' => $result,
-			));
-
-	});
-
-	$app->get("/hardware/show/:id", function($id) use ($app){
-		$hardware = new Hardware();
-		$result = $hardware->fetchByID($id);
-
-
-		$app->render('config/show.php', array(
-			'hardware' => $result,
+		$app->render('home/bami.php', array(
+			'bami' => $result[0]['id'] 
 			));
 
 	});

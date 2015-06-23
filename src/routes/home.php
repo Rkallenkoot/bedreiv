@@ -12,6 +12,6 @@ $app->get('/bami', function() use ($app){
 	$result = $hardware->fetchAll();
 
 	$app->render('home/bami.php', array(
-		'bami' => $result[2]['id']
+		'bami' => $result[0]['id']
 		));
 });
