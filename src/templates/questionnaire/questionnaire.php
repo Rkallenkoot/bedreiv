@@ -10,14 +10,14 @@
             <?php if(isset($questionid)){
 
                 // Incident is opgelost
-                if($questionid == 0){
-                    header("Location: /incidents/all");
+                if($question_db['type'] == 'solution'){
+                    header("Location: /questionnaire_finished");
                     die();
                 }
 
                 // Incident is opgelost
-                if($questionid == 999){
-                    header("Location: /incidents/all");
+                if($question_db['type'] == 'saveincident'){
+                    header("Location: /incident_new");
                     die();
                 }
 

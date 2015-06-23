@@ -14,3 +14,7 @@ $app->get('/questionnaire/:id', function($id) use ($app){
 $app->get('/questionnaire', function() use ($app){
 	$app->render('questionnaire/questionnaire.php');
 });
+
+$app->get('/questionnaire_finished', function() use ($app){
+	$app->render('questionnaire/questionnaire_finished.php');
+});

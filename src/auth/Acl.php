@@ -36,6 +36,7 @@ class Acl extends ZendAcl
         $this->addResource('/incidents/close');
         $this->addResource('/questionnaire');
         $this->addResource('/questionnaire/:id');
+        $this->addResource('/questionnaire_finished');
 
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
@@ -57,6 +58,7 @@ class Acl extends ZendAcl
 		// Vragenlijst
 		$this->allow('guest', '/questionnaire', $this->defaultPrivilege);
 		$this->allow('guest', '/questionnaire/:id', $this->defaultPrivilege);
+		$this->allow('guest', '/questionnaire_finished', $this->defaultPrivilege);
 
 		// This allows admin access to everything
 		$this->allow('admin');
