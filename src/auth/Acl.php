@@ -34,6 +34,7 @@ class Acl extends ZendAcl
 		$this->addResource('/incident_update');
 		$this->addResource('/incident_new');
         $this->addResource('/incidents/close');
+        $this->addResource('/questionnaire');
         $this->addResource('/questionnaire/:id');
 
 		// APPLICATION PERMISSIONS
@@ -54,6 +55,7 @@ class Acl extends ZendAcl
 		$this->allow('member', '/bami', $this->defaultPrivilege);
 
 		// Vragenlijst
+		$this->allow('guest', '/questionnaire', $this->defaultPrivilege);
 		$this->allow('guest', '/questionnaire/:id', $this->defaultPrivilege);
 
 		// This allows admin access to everything

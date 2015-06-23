@@ -88,3 +88,13 @@ p.bg-danger {
  .main .page-header {
  	margin-top: 0;
  }
+
+ #bigbutton{
+ 	width:90px;
+ 	height:55px;
+ 	font-size:22px;
+ }
+
+ .question{
+ 	min-height:130px;
+ }
