@@ -8,8 +8,8 @@ include '../templates/partials/menu.php';
 		<?php include '../templates/partials/sidenav.php'; ?>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h2 class="sub-header">Hardware wijzingen - <small><?=$hardware['id']?></small></h2>
 			<form class="form-horizontal col-sm-8" action="/configs/hardware/update" method="POST">
-				<legend>Hardware wijzingen</legend>
 				<div class="form-group">
 					<label for="id" class="col-sm-2 control-label">Hardware ID:</label>
 					<div class="col-sm-10">

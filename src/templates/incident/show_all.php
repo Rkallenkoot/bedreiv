@@ -10,7 +10,7 @@ include '../templates/partials/menu.php';
 		<?php include '../templates/partials/sidenav.php'; ?>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h2 class="sub-header">Incidenten <a class="pull-right" href="/incident_new"><button class="btn btn-success">Nieuw Incident Registreren</button></a> </h2>
+			<h2 class="sub-header">Incidenten <a class="pull-right btn btn-success" href="/incident_new">Nieuw Incident Registreren</a></h2>
 
 			<div class="table-responsive">
 				<table class="table table-striped">

@@ -9,8 +9,7 @@ include '../templates/partials/menu.php';
 		<?php include '../templates/partials/sidenav.php'; ?>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h2>Incident : <?php echo $data["id"];?></h2>
-			<h3>Incident Wijzigen</h3>
+			<h2 class="sub-header">Incident wijzigen - <small>Incident #<?=$data['id']?></small></h2>
 			<form action="/incidents/update" method="post" id="f_update">
 				<input type="hidden" value="<?php echo $data['id'];?>" name="id"/>
 				<input type="hidden" name="user_id" value="<?php echo $data['user_id'];?>"/>

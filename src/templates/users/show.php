@@ -8,6 +8,7 @@ include '../templates/partials/menu.php';
 		<?php include '../templates/partials/sidenav.php'; ?>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h2 class="sub-header">User Wijzigen - <small><?=$user['username']?></small></h2>
 			<form class="form-horizontal col-lg-6" role="form" action="/users/update" method="POST">
 			<input type="hidden" value="<?=$user['id']?>" name="id">
 				<div class="form-group">
