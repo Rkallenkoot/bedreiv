@@ -17,8 +17,8 @@ Config::set('app.templates.path', '../templates');
 /**
  * Database configuration
  */
-Config::set('db.host', 'project.topster21.net');
+Config::set('db.host', 'host');
 Config::set('db.port', 3306);
-Config::set('db.dbname', 'project_prod');
-Config::set('db.user', 'tehuser');
-Config::set('db.password', 'karate');
+Config::set('db.dbname', 'database');
+Config::set('db.user', 'user');
+Config::set('db.password', 'password');
