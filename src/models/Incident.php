@@ -130,13 +130,13 @@ class Incident extends BaseModel {
     /*
      * This function will update a row in the database
      */
-    public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status, $opmerking){
+    public function updateIncident($id, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status, $opmerking){
 
 
         $query = "update incident i
                   left join incident_opmerking io on i.id = io.incident_id
                   set
-                  i.datum_afgerond=:date_finished,
+
                   i.user_id = :user_id,
                   i.assigned_to = :assigned_to,
                   i.omschrijving = :omschrijving,
@@ -153,7 +153,7 @@ class Incident extends BaseModel {
         $stmt = $this->dbh->prepare($query);
         $stmt->execute(array(
 
-            ':date_finished' => $date_finished,
+
             ':user_id' => $user_id,
             ':assigned_to' => $assigned_to,
             ':omschrijving' => $description,
