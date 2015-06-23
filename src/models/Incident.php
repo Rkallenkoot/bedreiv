@@ -26,7 +26,7 @@ class Incident extends BaseModel {
                   from incident i
                   join prioriteit p on p.id = i.prioriteit_id
                   left join status s on s.id = i.status
-                  order by status_id asc, i.datum desc
+                  order by status_id asc, p.id desc, i.datum desc
 
                   ";
 
@@ -176,7 +176,7 @@ class Incident extends BaseModel {
      * This function will close a ticket, and set a date
      */
     public function rondAf($id){
-        $stmt = $this->dbh->prepare("update incident set datum_afgerond = now(), status = 4 where id = :id");
+        $stmt = $this->dbh->prepare("update incident set datum_afgerond = now(), status = 3 where id = :id");
         $stmt->execute(array(
             ':id' => $id
         ));

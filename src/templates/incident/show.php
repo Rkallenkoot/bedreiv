@@ -94,7 +94,7 @@ include '../templates/partials/menu.php';
 								?>
 							</select>
 
-                            <button form="f_close" class="btn btn-danger">Sluit Incident</button>
+                            <button form="f_close" class="btn btn-success">Opgelost</button>
 						</td>
 					</tr>
 					<tr>
