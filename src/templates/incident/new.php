@@ -2,10 +2,7 @@
 include '../templates/partials/header.php';
 include '../templates/partials/menu.php';
 
-
-
 ?>
-
 
 <div class="container-fluid">
 	<div class="row">
