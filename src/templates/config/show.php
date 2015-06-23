@@ -82,9 +82,6 @@ include '../templates/partials/menu.php';
 					<p class="bg-danger"><?=$flash['error']?></p>
 				<?php endif; ?>
 			</form>
-					<pre>
-		<?php var_dump($hardware);?>
-		</pre>
 		</div>
 	</div>
 </div>

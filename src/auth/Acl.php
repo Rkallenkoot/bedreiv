@@ -43,12 +43,19 @@ class Acl extends ZendAcl
 		$this->addResource('/users/update');
 		$this->addResource('/users/delete');
 
-        // configs
-        $this->addResource('/configs/hardware/all');
-        $this->addResource('/configs/hardware/create');
-        $this->addResource('/configs/hardware/show/:id');
-        $this->addResource('/configs/hardware/update');
-        $this->addResource('/configs/hardware/delete');
+		// Configs
+		// Hardware
+		$this->addResource('/configs/hardware/all');
+		$this->addResource('/configs/hardware/create');
+		$this->addResource('/configs/hardware/show/:id');
+		$this->addResource('/configs/hardware/update');
+		$this->addResource('/configs/hardware/delete');
+		// Software
+		$this->addResource('/configs/software/all');
+		$this->addResource('/configs/software/create');
+		$this->addResource('/configs/software/show/:id');
+		$this->addResource('/configs/software/update');
+		$this->addResource('/configs/software/delete');
 
 
 		// APPLICATION PERMISSIONS

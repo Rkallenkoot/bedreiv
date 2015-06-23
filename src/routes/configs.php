@@ -4,6 +4,7 @@ use \models\Soort;
 use \models\Locatie;
 use \models\Merk;
 use \models\Relatie;
+use \models\Software;
 
 
 use \JeremyKendall\Slim\Auth\HttpForbiddenException;
@@ -118,6 +119,108 @@ $app->group('/configs', function() use ($app){
 		$app->redirect('/configs/hardware/all');
 
 	});
+
+	$app->group('/software', function() use ($app){
+
+		$app->get('/all', function() use ($app){
+			$software = new Software();
+			$softwares = $software->fetchAllJoined(); // hihi softwares
+
+
+			$app->render('config/software/index.php', array(
+				'software' => $softwares));
+		});
+
+		$app->get('/create', function() use ($app){
+			$soort = new Soort();
+			$soorten = $soort->fetchAll();
+
+			$app->render('config/software/create.php', array(
+				'soorten' => $soorten));
+		});
+
+		$app->post('/create', function() use ($app){
+			$id = $app->request->post('id');
+			$naam = $app->request->post('naam');
+
+			if($id == "" || $naam == ""){
+				$app->flash('error', "Formulier is niet correct ingevuld");
+				$app->redirect('/configs/software/create');
+			}
+
+			$software = new Software();
+			$result = $software->insert(
+				$id,
+				$naam,
+				$app->request->post('soort'),
+				$app->request->post('aantallicenties')
+				);
+
+			if(!$result[0]){
+				$app->flash('error', "Software is niet toegevoegd!<br>".$result[1]);
+				$app->redirect('/configs/software/all');
+			}
+			$app->flash('success', "Software succesvol toegevoegd!");
+			$app->redirect('/configs/software/all');
+
+		});
+
+		// Show :id endpoint
+		$app->get('/show/:id', function($id) use ($app){
+			$soort = new Soort();
+			$soorten = $soort->fetchAll();
+
+			$software = new Software();
+			$soft = $software->findById($id);
+
+			$app->render('config/software/show.php', array(
+				'software' => $soft,
+				'soorten' => $soorten));
+			// Roelof je ging deze invullen
+		});
+
+		// Update endpoint
+		$app->post('/update', function() use ($app){
+			$id = $app->request->post('id');
+			$naam = $app->request->post('naam');
+			$soort = $app->request->post('soort');
+			$aantal = $app->request->post('aantallicenties');
+
+			if($id == "" || $id == null){
+				$app->flash('error', 'Formulier niet goed ingevuld');
+				$app->redirect("/configs/software/show/$id");
+			}
+
+			$software = new Software();
+			$result = $software->update($id, $naam, $soort, $aantal);
+
+			if(!$result[0]){
+				$app->flash('error', "Software is niet gewijzigd!<br>".$result[1]);
+				$app->redirect('/configs/software/all');
+			}
+			$app->flash('success', "Software succesvol gewijzigd!");
+			$app->redirect('/configs/software/all');
+
+		});
+
+		// Delete endpoint
+		$app->post('/delete', function() use ($app){
+			$id = $app->request->post('id');
+
+			if($id == "" || $id == null){
+				$app->flash('error', 'Software kon niet worden verwijderd.');
+				$app->redirect('/configs/software/all');
+			}
+
+			$software = new Software();
+			$software->delete($id);
+			$app->flash('success', 'Software succesvol verwijderd!');
+			$app->redirect('/configs/software/all');
+		});
+
+
+	});
+
 
 });
 
