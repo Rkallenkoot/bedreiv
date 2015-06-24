@@ -21,8 +21,4 @@ Config::set('db.host', 'project.topster21.net');
 Config::set('db.port', 3306);
 Config::set('db.dbname', 'project_prod');
 Config::set('db.user', 'tehuser');
-<<<<<<< HEAD
 Config::set('db.password', 'karate');
-=======
-Config::set('db.password', 'karate');
->>>>>>> origin/thijs
