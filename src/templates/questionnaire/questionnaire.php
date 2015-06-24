@@ -35,7 +35,12 @@
                 <h2>Incident toevoegen</h2><hr>
                 Welkom bij het meldpunt voor incidenten. Voordat het incident geregistreerd kan worden, dient er eerst een vragenlijst ingevuld te worden. Het is mogelijk dat uw incident in het proces van de vragenlijst wordt opgelost. In dat geval hoeft het incident niet opgenomen te worden in het incidentenmanagement database
                 <br><br>
-                <center><a href="/questionnaire/1"><button type="button" class="btn btn-primary">Naar de vragenlijst</button></a></center>';               
+                <center><a href="/questionnaire/1"><button type="button" class="btn btn-primary">Naar de vragenlijst</button></a></center>';      
+
+                // Add an option to skip the questionnaire when you're an admin
+                if($role == "admin"){
+                    echo '<center><br><a href="/incident_new">Klik hier om rechtstreeks een incident toe te voegen (admin only)</a></center>';
+                }         
             }?>
         </div>
         <div class="col-md-4"></div>
