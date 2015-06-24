@@ -57,18 +57,44 @@ include '../templates/partials/menu.php';
                             </select>
                         </td>
                     </tr>
-                    <tr>
-                        <td>Opmerking:</td>
-                        <td><textarea name="opmerking" cols="30" rows="5"><?php echo $data['beschrijving'];?></textarea></td>
-                    </tr>
-                    <tr>
-                        <td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
-                        <td><button <?php  if ( $data['status'] == 4 ){echo ' disabled ';}?>class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
-                    </tr>
+
 
 
                 </table>
             </form>
+            <?php foreach ($berichten as $bericht){ ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bericht van <strong><?=$bericht['username'];?> </strong>op <?=$bericht['datum']; ?></div>
+                    <div class="panel-body">
+                        <?= $bericht['beschrijving'] ; ?>
+                    </div>
+                    <br/>
+                </div>
+            <?php } ?>
+
+
+
+
+
+
+            </form>
+            <form action="/incidents/newmessage" method="post" id="newmessage" class="">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Stuur nieuw bericht:</div>
+                    <div class="panel-body">
+
+                        <textarea class="form-control" name="body" id="" cols="30" rows="10" required placeholder="Type hier uw text."></textarea>
+                        <input type="submit" class="btn btn-primary" value=" Verstuur ! "/>
+                        <input type="hidden" name="id" value="<?=$data['id'];?>"/>
+                        <input type="hidden" name="userid" value="<?= $identity['id'];?>"/>
+
+
+                    </div>
+
+                </div>
+
+            </form>
+
 
 
         </div><!-- end col 8 -->
