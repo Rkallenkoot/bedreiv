@@ -178,7 +178,6 @@ class Incident extends BaseModel {
         $query = "update incident i
 
                   set
-
                   i.user_id = :user_id,
                   i.assigned_to = :assigned_to,
                   i.omschrijving = :omschrijving,
@@ -192,8 +191,6 @@ class Incident extends BaseModel {
 
         $stmt = $this->dbh->prepare($query);
         $stmt->execute(array(
-
-
             ':user_id' => $user_id,
             ':assigned_to' => $assigned_to,
             ':omschrijving' => $description,
@@ -225,6 +222,16 @@ class Incident extends BaseModel {
 
     	$stmt = $this->dbh->prepare($query);
     	$stmt->execute();
+    	return $stmt->fetch();
+    }
+
+    public function fetchOpenCountByUserID($id){
+    	$query = "SELECT COUNT(*) as 'open' from incident
+    	where status = 1 and assigned_to = :id";
+
+    	$stmt = $this->dbh->prepare($query);
+    	$stmt->execute(array(
+    		':id' => $id));
     	return $stmt->fetch();
     }
 

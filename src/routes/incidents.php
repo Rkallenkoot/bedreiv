@@ -129,7 +129,6 @@ $app->group('/incidents', function() use ($app){
         } else {
             $incident->updateIncident(
                 $app->request->post('id'),
-                $app->request->post('datum'),
                 $app->request->post('user_id'),
                 $temp['assigned_to'],
                 $app->request->post('omschrijving'),
@@ -140,7 +139,6 @@ $app->group('/incidents', function() use ($app){
                 $app->request->post('categorie_id'),
                 $temp['status'],
                 $app->request->post('opmerking')
-
             );
 
             // We can flash some info here about the update
