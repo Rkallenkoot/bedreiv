@@ -45,14 +45,14 @@ class Incident extends BaseModel {
 		public function getAllByUserId($user_id){
 
 				// Construct query
-			$query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status, i.status as status_id
+			$query = "SELECT i.id, i.datum, i.datum_afgerond,p.naam,
+			i.workaround, i.omschrijving, i.hardware_id,
+			i.software_id, s.naam as status, i.status as status_id
 			from incident i
 			join prioriteit p on p.id = i.prioriteit_id
-
 			left join status s on s.id = i.status
 			where i.user_id = :user_id
 			order by status_id asc, p.id desc, i.datum desc
-
 			";
 
 				// Prepare statement
@@ -65,29 +65,21 @@ class Incident extends BaseModel {
 		}
 		// -- Vergelijkbare omschrijvingen met zelfde hardware/software doen
 		public function compareIncidents($own_id, $software_id = null, $hardware_id = null, $omschrijving = null){
-			$q = "
-			select i.id, i.hardware_id, i.omschrijving, s.uitgebreide_naam, i.workaround
-			from incident i
+			$q = "SELECT i.id, i.hardware_id, i.omschrijving,
+			s.uitgebreide_naam, i.workaround from incident i
 			left join software s on i.software_id = s.id
-			where i.id in (
-				select i2.id
+			where i.id in (select i2.id
 				from incident i2
 				join software s2 on i2.software_id = s2.id
-				where s2.id = :software_id AND i.id != :own_id
-				)
-OR
-i.id in (
-	select i3.id
-	from incident i3
+				where s2.id = :software_id AND i.id != :own_id)
+OR i.id in (select i3.id from incident i3
 	join hardware h on i3.hardware_id = h.id
-	where h.id = :hardware_id AND i.id != :own_id
-	)
+	where h.id = :hardware_id AND i.id != :own_id)
 OR i.id in (
 	select i4.id
 	from incident i4
 	where omschrijving = :omschrijving AND i.id != :own_id
-	)
-";
+	)";
 
 $stmt = $this->dbh->prepare($q);
 $stmt->execute(array(
@@ -108,7 +100,10 @@ return $stmt->fetchAll();
 		public function getItemById($id)   {
 
 				// Construct query
-			$query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, u.username, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving, s.naam as statusnaam
+			$query = "SELECT i.id, i.datum, i.user_id, i.assigned_to,
+			i.omschrijving, i.hardware_id, u.username, i.prioriteit_id,
+			i.datum_afgerond, i.workaround, i.software_id, i.status,
+			i.categorie_id, io.beschrijving, s.naam as statusnaam
 			from incident i
 			join user u on u.id = i.user_id
 			left join incident_opmerking io on io.incident_id = i.id
@@ -131,7 +126,7 @@ return $stmt->fetchAll();
 			$incident = new Incident();
 
 				// Construct Query
-			$query = "insert into incident (datum, user_id, omschrijving, prioriteit_id, hardware_id, software_id, categorie_id, status)
+			$query = "INSERT into incident (datum, user_id, omschrijving, prioriteit_id, hardware_id, software_id, categorie_id, status)
 			values (now(), :user_id, :omschrijving, :prio, :hardware_id, :software_id, :cat_id, :status)";
 
 			$stmt = $this->dbh->prepare($query);
@@ -172,8 +167,7 @@ public function getLastFromUser($id) {
 		public function updateIncident($id, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
 
 
-			$query = "update incident i
-
+			$query = "UPDATE incident i
 			set
 			i.user_id = :user_id,
 			i.assigned_to = :assigned_to,
