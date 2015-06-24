@@ -33,8 +33,13 @@ class Acl extends ZendAcl
 		$this->addResource('/incidents/update');
 		$this->addResource('/incident_update');
 		$this->addResource('/incident_new');
+
 		$this->addResource('/incidents/close');
 
+
+		$this->addResource('/questionnaire');
+		$this->addResource('/questionnaire/:id');
+		$this->addResource('/questionnaire_finished');
 
 		// User management
 		$this->addResource('/users/all');
@@ -61,7 +66,6 @@ class Acl extends ZendAcl
 		$this->addResource('/configs/software/update');
 		$this->addResource('/configs/software/delete');
 
-
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
 		// The third argument is 'privilege'. In Slim Auth privilege == HTTP method
@@ -80,6 +84,10 @@ class Acl extends ZendAcl
         // Configs
 		$this->allow('member', '/bami', $this->defaultPrivilege);
 
+		// Vragenlijst
+		$this->allow('member', '/questionnaire', $this->defaultPrivilege);
+		$this->allow('member', '/questionnaire/:id', $this->defaultPrivilege);
+		$this->allow('member', '/questionnaire_finished', $this->defaultPrivilege);
 
 		// This allows admin access to everything
 		$this->allow('admin');

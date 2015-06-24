@@ -81,7 +81,7 @@ require '../routes/auth.php';
 require '../routes/incidents.php';
 require '../routes/users.php';
 require '../routes/configs.php';
+require '../routes/vragenlijst.php';
 
 // Run the app
 $app->run();
-
