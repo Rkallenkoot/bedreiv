@@ -61,6 +61,42 @@ class Incident extends BaseModel {
 
         return $stmt->fetchAll();
     }
+    // -- Vergelijkbare omschrijvingen met zelfde hardware/software doen
+    public function compareIncidents($own_id, $software_id = null, $hardware_id = null, $omschrijving = null){
+        $q = "
+            select i.id, i.hardware_id, i.omschrijving, s.uitgebreide_naam, i.workaround
+            from incident i
+            left join software s on i.software_id = s.id
+            where i.id in (
+            select i2.id
+            from incident i2
+            join software s2 on i2.software_id = s2.id
+            where s2.id = :software_id AND i.id != :own_id
+            )
+            OR
+            i.id in (
+            select i3.id
+            from incident i3
+            join hardware h on i3.hardware_id = h.id
+            where h.id = :hardware_id AND i.id != :own_id
+            )
+            OR i.id in (
+            select i4.id
+            from incident i4
+            where omschrijving = :omschrijving AND i.id != :own_id
+	        )
+        ";
+
+        $stmt = $this->dbh->prepare($q);
+        $stmt->execute(array(
+            ':software_id' => $software_id,
+            ':hardware_id' => $hardware_id,
+            ':omschrijving' => $omschrijving,
+            ':own_id' => $own_id
+        ));
+
+        return $stmt->fetchAll();
+    }
 
 
     /*
