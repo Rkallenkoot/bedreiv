@@ -41,6 +41,7 @@ $app->group('/incidents', function() use ($app){
 		$status = new \models\Status();
 		$user = new \models\User();
         $prioriteiten = new \models\Prioriteit();
+        $bericht = new \models\Opmerking();
 
         $identity = $app->auth->getIdentity();
         $result = $incident->getItemById($id);
@@ -60,7 +61,8 @@ $app->group('/incidents', function() use ($app){
                 'status' => $status->fetchIdNames(),
                 'users' => $user->fetchUserNames(),
                 'prioriteiten' => $prioriteiten->fetchPriorities(),
-                'comparison' => $incident->compareIncidents($id, $result['software_id'], $result['hardware_id'], $result['omschrijving'])
+                'comparison' => $incident->compareIncidents($id, $result['software_id'], $result['hardware_id'], $result['omschrijving']),
+                'berichten' => $bericht->getMessages($id)
             ));
 
         } else if ($identity['id'] == $result['user_id']) {
@@ -71,13 +73,33 @@ $app->group('/incidents', function() use ($app){
                 'software' => $software->fetchIdName(),
                 'status' => $status->fetchIdNames(),
                 'users' => $user->fetchUserNames(),
-                'prioriteiten' => $prioriteiten->fetchPriorities()
+                'prioriteiten' => $prioriteiten->fetchPriorities(),
+                'berichten' => $bericht->getMessages($id)
             ));
 
         } else {
             $app->redirect('/incidents/all');
         }
 	});
+
+
+    $app->post('/newmessage', function() use ($app){
+        $bericht = new \models\Opmerking();
+        $body = $app->request->post('body');
+        if ($body == ''|| strlen($body) == 0 || empty($body)){
+            $app->flash('error', 'Geen opmerking ingevuld.');
+            $app->redirect('/incidents/show/'.$app->request->post('id'));
+        }
+
+        $bericht->newMessage(
+          $app->request->post('id'),
+            $app->request->post('userid'),
+            $app->request->post('body')
+        );
+
+        $app->flash('success', 'Opmerking toegevoegd!');
+        $app->redirect('/incidents/show/'.$app->request->post('id'));
+    });
 
 	// update incident
 	$app->post('/update', function() use ($app){
@@ -139,6 +161,7 @@ $app->group('/incidents', function() use ($app){
     });
 
 });
+
 
 $app->get('/incident_new', function() use ($app){
 

@@ -30,6 +30,7 @@ class Acl extends ZendAcl
 		$this->addResource('/admin');
 		$this->addResource('/incidents/all');
 		$this->addResource('/incidents/show/:id');
+        $this->addResource('/incidents/newmessage');
 		$this->addResource('/incidents/update');
 		$this->addResource('/incident_update');
 		$this->addResource('/incident_new');
@@ -79,7 +80,7 @@ class Acl extends ZendAcl
 		$this->allow('member', '/incidents/show/:id', $this->defaultPrivilege);
 		$this->allow('member', '/incidents/update', array('POST'));
 		$this->allow('admin', '/incidents/close', array('POST'));
-
+        $this->allow('member', '/incidents/newmessage', array('POST'));
 
         // Configs
 		$this->allow('member', '/bami', $this->defaultPrivilege);

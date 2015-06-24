@@ -37,6 +37,9 @@ class Incident extends BaseModel {
         return $stmt->fetchAll();
     }
 
+
+
+
     /*
    * Get all the incidents by userID or role
    *
@@ -146,6 +149,7 @@ class Incident extends BaseModel {
         ));
 
         /* Insert opmerking er na */
+        /* DEPRECATED
         $query = "insert into incident_opmerking(beschrijving, datum, incident_id) values (:beschrijving, now(), :incident_id)";
 
         $stmt = $this->dbh->prepare($query);
@@ -153,7 +157,7 @@ class Incident extends BaseModel {
             ':beschrijving' => 'Geen Opmerking',
             ':incident_id' => $incident->getLastFromUser($user_id)['id']
         ));
-
+            */
     }
 
     public function getLastFromUser($id) {
@@ -168,11 +172,11 @@ class Incident extends BaseModel {
     /*
      * This function will update a row in the database
      */
-    public function updateIncident($id, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status, $opmerking){
+    public function updateIncident($id, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status){
 
 
         $query = "update incident i
-                  left join incident_opmerking io on i.id = io.incident_id
+
                   set
                   i.user_id = :user_id,
                   i.assigned_to = :assigned_to,
@@ -182,9 +186,7 @@ class Incident extends BaseModel {
                   i.hardware_id = :hardware_id,
                   i.software_id = :software_id,
                   i.categorie_id = :cat_id,
-                  i.status = :status,
-                  io.beschrijving = :opmerking,
-                  io.incident_id = :ioIncidentId
+                  i.status = :status
                   where i.id = :id";
 
         $stmt = $this->dbh->prepare($query);
@@ -198,8 +200,6 @@ class Incident extends BaseModel {
             ':software_id' => $software_id == 'null' ? null : $software_id,
             ':cat_id' => $category_id,
             ':status' => $status,
-            ':opmerking' => $opmerking,
-            ':ioIncidentId' => $id,
             ':id' => $id
 
         ));
