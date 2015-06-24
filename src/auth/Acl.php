@@ -33,30 +33,10 @@ class Acl extends ZendAcl
 		$this->addResource('/incidents/update');
 		$this->addResource('/incident_update');
 		$this->addResource('/incident_new');
-<<<<<<< HEAD
         $this->addResource('/incidents/close');
         $this->addResource('/questionnaire');
         $this->addResource('/questionnaire/:id');
         $this->addResource('/questionnaire_finished');
-=======
-		$this->addResource('/incidents/close');
-
-
-		// User management
-		$this->addResource('/users/all');
-		$this->addResource('/users/create');
-		$this->addResource('/users/show/:id');
-		$this->addResource('/users/update');
-		$this->addResource('/users/delete');
-
-        // configs
-        $this->addResource('/configs/hardware/all');
-        $this->addResource('/configs/hardware/create');
-        $this->addResource('/configs/hardware/show/:id');
-        $this->addResource('/configs/hardware/update');
-        $this->addResource('/configs/hardware/delete');
-
->>>>>>> origin/master
 
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
@@ -66,18 +46,13 @@ class Acl extends ZendAcl
 		$this->allow('guest', '/logout', $this->defaultPrivilege);
 
 		// Incidents
-<<<<<<< HEAD
     	$this->allow('member', '/incident_new', array('POST', 'GET'));
-=======
-		$this->allow('member', '/incident_new', array('POST', 'GET'));
->>>>>>> origin/master
 		$this->allow('member', '/incidents/all', $this->defaultPrivilege);
 		$this->allow('member', '/incidents/show/:id', $this->defaultPrivilege);
 		$this->allow('member', '/incidents/update', array('POST'));
-		$this->allow('admin', '/incidents/close', array('POST'));
+        $this->allow('admin', '/incidents/close', array('POST'));
 
 
-        // Configs
 		$this->allow('member', '/bami', $this->defaultPrivilege);
 
 		// Vragenlijst

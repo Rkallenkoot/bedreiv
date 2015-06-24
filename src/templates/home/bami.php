@@ -6,6 +6,6 @@
 </head>
 <body>
 	<h1>BEDREIV - bami </h1>
-	<pre><?php print_r($bami); ?></pre>
+	<pre><?php echo $data['bami'] ?></pre>
 </body>
 </html>

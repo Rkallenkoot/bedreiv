@@ -82,28 +82,10 @@ $app->group('/incidents', function() use ($app){
 	$app->post('/update', function() use ($app){
 		$incident = new Incident();
         $temp = $incident->getItemById($app->request->post('id'));
-        if ($app->auth->getIdentity()['role'] == 'admin'){
-
-            $incident->updateIncident(
-                $app->request->post('id'),
-                $app->request->post('user_id'),
-                $app->request->post('assigned_to'),
-                $app->request->post('omschrijving'),
-                $app->request->post('workaround'),
-                $app->request->post('prioriteit_id'),
-                $app->request->post('hardware_id'),
-                $app->request->post('software_id'),
-                $app->request->post('categorie_id'),
-                $app->request->post('status'),
-                $app->request->post('opmerking')
-            );
-
-            $app->redirect('/incidents/all'
+        if ($app->auth->getIdentity()['role'] != 'admin'){
 
 
-            );
 
-        } else {
             $incident->updateIncident(
                 $app->request->post('id'),
                 $app->request->post('datum'),
@@ -117,7 +99,24 @@ $app->group('/incidents', function() use ($app){
                 $app->request->post('categorie_id'),
                 $temp['status'],
                 $app->request->post('opmerking')
+            );
 
+            $app->redirect('/incidents/all');
+        } else {
+
+            $incident->updateIncident(
+                $app->request->post('id'),
+                $app->request->post('datum'),
+                $app->request->post('user_id'),
+                $app->request->post('assigned_to'),
+                $app->request->post('omschrijving'),
+                $app->request->post('workaround'),
+                $app->request->post('prioriteit_id'),
+                $app->request->post('hardware_id'),
+                $app->request->post('software_id'),
+                $app->request->post('categorie_id'),
+                $app->request->post('status'),
+                $app->request->post('opmerking')
             );
 
             // We can flash some info here about the update

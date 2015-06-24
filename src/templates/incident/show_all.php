@@ -2,11 +2,10 @@
 <?php
 include '../templates/partials/header.php';
 include '../templates/partials/menu.php';
-
 ?>
 
 <div class="container-fluid">
-	<div class="row"><button class="btn btn-danger btn-success btn-default btn-info btn-warning"></button>
+	<div class="row">
 <?php include '../templates/partials/sidenav.php'; ?>
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -38,31 +37,14 @@ include '../templates/partials/menu.php';
 						<?php
 
 						foreach ($data as $row) {
-                            // Fancy buttons showing status
-                            switch ($row['status']){
-                                case 'Nieuw':
-                                    $button = 'btn btn-info';
-                                    break;
-                                case 'Bezig':
-                                    $button = 'btn btn-warning';
-                                    break;
-                                case 'Opgelost':
-                                    $button = 'btn btn-success';
-                                    break;
-
-                                default:
-                                    $button = 'btn btn-danger';
-                                    break;
-                            }
 							?>
-
-							<tr></button>
+							<tr>
 								<td><?php echo $row["id"];?></td>
 								<td><?php echo $row["datum"];?></td>
 								<td><?php echo $row["datum_afgerond"];?></td>
 								<td><?php echo $row["omschrijving"];?></td>
 								<td><?php echo $row['workaround'];?></td>
-                                <td><?php echo '<button disabled class="'.$button.'">'.$row['status'].'</button>';?></td>
+                                <td><?php echo $row['status'];?></td>
 								<td><?php echo $row['naam'];?></td>
 								<td><?php echo $row["hardware_id"];?></td>
 								<td><?php echo $row["software_id"];?></td>

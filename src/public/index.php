@@ -56,13 +56,10 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 	$hasIdentity = $app->auth->hasIdentity();
 	$identity = $app->auth->getIdentity();
 	$role = ($hasIdentity) ? $identity['role'] : 'guest';
-
-	$uri = $app->request()->getResourceUri();
 	$data = array(
 		'hasIdentity' => $hasIdentity,
 		'role' =>  $role,
-		'identity' => $identity,
-		'uri' => $uri
+		'identity' => $identity
 		);
 	$app->view->appendData($data);
 });
@@ -73,12 +70,7 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 require '../routes/home.php';
 require '../routes/auth.php';
 require '../routes/incidents.php';
-<<<<<<< HEAD
 require '../routes/vragenlijst.php';
-=======
-require '../routes/users.php';
-require '../routes/configs.php';
->>>>>>> origin/master
 
 // Run the app
 $app->run();

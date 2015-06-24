@@ -22,11 +22,10 @@ class Incident extends BaseModel {
     public function getAll(){
 
         // Construct query
-        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status, i.status as status_id
+        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status
                   from incident i
                   join prioriteit p on p.id = i.prioriteit_id
                   left join status s on s.id = i.status
-                  order by status_id asc, p.id desc, i.datum desc
 
                   ";
 
@@ -48,7 +47,6 @@ class Incident extends BaseModel {
         $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status
                   from incident i
                   join prioriteit p on p.id = i.prioriteit_id
-
                   left join status s on s.id = i.status
                   where i.user_id = :user_id
                   ";
@@ -70,11 +68,9 @@ class Incident extends BaseModel {
     public function getItemById($id)   {
 
         // Construct query
-        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, u.username, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving, s.naam as statusnaam
+        $query = "select i.id, i.datum, i.user_id, i.assigned_to, i.omschrijving, i.hardware_id, i.prioriteit_id, i.datum_afgerond, i.workaround, i.software_id, i.status, i.categorie_id, io.beschrijving
                   from incident i
-                  join user u on u.id = i.user_id
                   left join incident_opmerking io on io.incident_id = i.id
-                  join status s on s.id = i.status
                   where i.id = :id";
 
         // Prepare statement
@@ -104,7 +100,7 @@ class Incident extends BaseModel {
             ':hardware_id' => $hardware_id,
             ':software_id' => $software_id == 'null' ? null : $software_id,
             ':cat_id' => $category_id,
-            ':status' => 1
+            ':status' => $status
         ));
 
         /* Insert opmerking er na */
@@ -130,13 +126,13 @@ class Incident extends BaseModel {
     /*
      * This function will update a row in the database
      */
-    public function updateIncident($id, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status, $opmerking){
+    public function updateIncident($id, $date_finished, $user_id, $assigned_to, $description, $workaround, $priority_id, $hardware_id, $software_id, $category_id, $status, $opmerking){
 
 
         $query = "update incident i
                   left join incident_opmerking io on i.id = io.incident_id
                   set
-
+                  i.datum_afgerond=:date_finished,
                   i.user_id = :user_id,
                   i.assigned_to = :assigned_to,
                   i.omschrijving = :omschrijving,
@@ -153,7 +149,7 @@ class Incident extends BaseModel {
         $stmt = $this->dbh->prepare($query);
         $stmt->execute(array(
 
-
+            ':date_finished' => $date_finished,
             ':user_id' => $user_id,
             ':assigned_to' => $assigned_to,
             ':omschrijving' => $description,
@@ -176,7 +172,7 @@ class Incident extends BaseModel {
      * This function will close a ticket, and set a date
      */
     public function rondAf($id){
-        $stmt = $this->dbh->prepare("update incident set datum_afgerond = now(), status = 3 where id = :id");
+        $stmt = $this->dbh->prepare("update incident set datum_afgerond = now(), status = 4 where id = :id");
         $stmt->execute(array(
             ':id' => $id
         ));
