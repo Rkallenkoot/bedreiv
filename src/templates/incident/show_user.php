@@ -87,7 +87,7 @@ include '../templates/partials/menu.php';
                     <div class="panel-body">
 
                         <textarea class="form-control" name="body" id="" cols="30" rows="10" required placeholder="Type hier uw text."></textarea>
-                        <input type="submit" class="btn btn-primary" value=" Verstuur ! "/>
+                        <input type="submit" <?php if ($data['status'] == 4){ echo 'disabled' ;} ?> class="btn btn-primary" value=" Verstuur ! "/>
                         <input type="hidden" name="id" value="<?=$data['id'];?>"/>
                         <input type="hidden" name="userid" value="<?= $identity['id'];?>"/>
 
