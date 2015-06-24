@@ -10,6 +10,12 @@ include '../templates/partials/menu.php';
 
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h2 class="sub-header">Incident wijzigen - <small>Incident #<?=$data['id']?></small></h2>
+            <?php if($flash['error']): ?>
+                <p class="bg-danger"><?=$flash['error']?></p>
+            <?php endif; ?>
+            <?php if($flash['success']): ?>
+                <p class="bg-success"><?=$flash['success']?></p>
+            <?php endif; ?>
 			<form action="/incidents/update" method="post" id="f_update">
 				<input type="hidden" value="<?php echo $data['id'];?>" name="id"/>
 				<input type="hidden" name="user_id" value="<?php echo $data['user_id'];?>"/>
@@ -111,53 +117,53 @@ include '../templates/partials/menu.php';
 							</select>
 						</td>
 					</tr>
-					<tr>
-						<td>Opmerking:</td>
-						<td><textarea name="opmerking" cols="30" rows="5"><?php echo $data['beschrijving'];?></textarea></td>
-					</tr>
-					<tr>
-						<td>Vergelijkbare Incidenten:</td>
-						<td>
-							<button class="btn btn-primary" type="button" data-toggle="collapse"
-							data-target="#incidentCollapse" aria-expanded="false" aria-controls="incidentCollapse"
-							<?php if(empty($comparison)){ echo 'disabled';}?>> Toon </button>
+                  <!--  <tr>
+                        <td>Opmerking:</td>
+                        <td><textarea name="opmerking" cols="30" rows="5"><?php //echo $data['beschrijving'];?></textarea></td>
+                    </tr> -->
+                    <tr>
+                        <td>Vergelijkbare Incidenten:</td>
+                        <td>
+                            <button class="btn btn-primary" type="button" data-toggle="collapse"
+                                    data-target="#incidentCollapse" aria-expanded="false" aria-controls="incidentCollapse"
+                            <?php if(empty($comparison)){ echo 'disabled';}?>> Toon </button>
 
 
-							<div class="collapse" id="incidentCollapse">
-								<br/>
-								<div class="well">
-									<table class="table table-responsive">
-										<tr class="panel-head">
-											<th>Id</th>
-											<th>Omschrijving</th>
-											<th>Workaround</th>
-											<th>Hardware Id</th>
-											<th>Software</th>
-											<th></th>
+                            <div class="collapse" id="incidentCollapse">
+                                <br/>
+                                <div class="well">
+                                    <table class="table table-responsive">
+                                        <tr class="panel-head">
+                                            <th>Id</th>
+                                            <th>Omschrijving</th>
+                                            <th>Workaround</th>
+                                            <th>Hardware Id</th>
+                                            <th>Software</th>
+                                            <th></th>
 
-										</tr>
-										<?php foreach($comparison as $item){ ?>
+                                        </tr>
+                                        <?php foreach($comparison as $item){ ?>
 
-										<tr class="panel">
-											<td><?= $item['id']; ?></td>
-											<td><?= $item['omschrijving'];?></td>
-											<td><?= $item['workaround'];?></td>
-											<td><?= $item['hardware_id'];?></td>
-											<td><?= $item['uitgebreide_naam']?></td>
-											<td><a href="<?= $item['id'] ;?>" class="btn btn-default">Bekijk</a></td>
+                                            <tr class="panel">
+                                                <td><?= $item['id']; ?></td>
+                                                <td><?= $item['omschrijving'];?></td>
+                                                <td><?= $item['workaround'];?></td>
+                                                <td><?= $item['hardware_id'];?></td>
+                                                <td><?= $item['uitgebreide_naam']?></td>
+                                                <td><a href="<?= $item['id'] ;?>" class="btn btn-default">Bekijk</a></td>
 
-										</tr>
+                                            </tr>
 
 
 
-										<?php } ?>
+                                        <?php } ?>
 
-									</table>
-								</div>
+                                    </table>
+                                </div>
 
-							</div>
-						</td>
-					</tr>
+                            </div>
+                        </td>
+                    </tr>
 					<tr>
 						<td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
 						<td><button class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
@@ -165,13 +171,45 @@ include '../templates/partials/menu.php';
 
 
 				</table>
+
+                <?php foreach ($berichten as $bericht){ ?>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Bericht van <strong><?=$bericht['username'];?> </strong>op <?=$bericht['datum']; ?></div>
+                    <div class="panel-body">
+                        <?= $bericht['beschrijving'] ; ?>
+                    </div>
+                    <br/>
+                </div>
+                <?php } ?>
+
+
+
+
+
+
 			</form>
-			<form action="/incidents/close" method="post" id="f_close">
-				<input type="hidden" name="id" value="<?php echo $data['id'];?>"/>
-			</form>
+            <form action="/incidents/newmessage" method="post" id="newmessage" class="">
+            <div class="panel panel-default">
+                <div class="panel-heading">Stuur nieuw bericht:</div>
+                <div class="panel-body">
+
+                            <textarea class="form-control" name="body" id="" cols="30" rows="10" required placeholder="Type hier uw text."></textarea>
+                        <input type="submit" class="btn btn-primary" value=" Verstuur ! "/>
+                        <input type="hidden" name="id" value="<?=$data['id'];?>"/>
+                    <input type="hidden" name="userid" value="<?= $identity['id'];?>"/>
+
+
+                </div>
+
+            </div>
+
+            </form>
+
+
+            <form action="/incidents/close" method="post" id="f_close">
+                <input type="hidden" name="id" value="<?php echo $data['id'];?>"/>
+            </form>
 
 		</div><!-- end col 8 -->
-	</div>
-</div>
 
 <?php include '../templates/partials/footer.php'; ?>
