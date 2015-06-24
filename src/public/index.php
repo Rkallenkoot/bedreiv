@@ -84,5 +84,7 @@ require '../routes/users.php';
 require '../routes/configs.php';
 require '../routes/vragenlijst.php';
 
+require '../routes/api.php';
+
 // Run the app
 $app->run();

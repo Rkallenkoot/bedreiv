@@ -12,11 +12,11 @@ use models\BaseModel;
 
 class Categorie extends BaseModel{
 
-    public function fetchCategories(){
-        $stmt = $this->dbh->prepare("select * from categorie");
-        $stmt->execute();
+	public function fetchCategories(){
+		$stmt = $this->dbh->prepare("select * from categorie");
+		$stmt->execute();
 
-        return $stmt->fetchAll();
-    }
+		return $stmt->fetchAll();
+	}
 
 }

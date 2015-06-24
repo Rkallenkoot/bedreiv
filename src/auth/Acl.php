@@ -67,6 +67,9 @@ class Acl extends ZendAcl
 		$this->addResource('/configs/software/update');
 		$this->addResource('/configs/software/delete');
 
+		// api
+		$this->addResource('/api/incidentCategoryCount');
+
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
 		// The third argument is 'privilege'. In Slim Auth privilege == HTTP method
