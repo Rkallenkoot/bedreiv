@@ -58,7 +58,10 @@ include '../templates/partials/menu.php';
                         </td>
                     </tr>
 
-
+                    <tr>
+                        <td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
+                       <td><button <?php  if ( $data['status'] == 4 ){echo ' disabled ';}?>class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
+                       </tr>
 
                 </table>
             </form>
