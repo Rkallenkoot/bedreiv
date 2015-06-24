@@ -45,12 +45,14 @@ class Incident extends BaseModel {
     public function getAllByUserId($user_id){
 
         // Construct query
-        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status
+        $query = "select i.id, i.datum, i.datum_afgerond,p.naam, i.workaround, i.omschrijving, i.hardware_id, i.software_id, s.naam as status, i.status as status_id
                   from incident i
                   join prioriteit p on p.id = i.prioriteit_id
 
                   left join status s on s.id = i.status
                   where i.user_id = :user_id
+                  order by status_id asc, p.id desc, i.datum desc
+
                   ";
 
         // Prepare statement
