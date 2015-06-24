@@ -19,13 +19,13 @@ include '../templates/partials/menu.php';
 						<td>Geplaatst op:</td>
 						<td><?php echo $data['datum'];?></td>
 					</tr>
-                    <tr>
-                        <td>Geplaatst door:</td>
-                        <td><?php echo $data['username'];?></td>
-                    </tr>
+					<tr>
+						<td>Geplaatst door:</td>
+						<td><?php echo $data['username'];?></td>
+					</tr>
 					<tr>
 						<td>Datum afgerond:</td>
-						<td><input type="datetime" name="datum" value="<?php echo $data['datum'];?>"/></td>
+						<td><input type="datetime" name="datum" value="<?=$data['datum_afgerond']?>" disabled/></td>
 					</tr>
 					<tr>
 						<td>Omschrijving:</td>
@@ -39,13 +39,13 @@ include '../templates/partials/menu.php';
 						<td>Prioriteit:</td>
 						<td>
 							<select name="prioriteit_id">
-                                <?php
-                                foreach ($prioriteiten as $prioriteit){
-                                    echo "<option ";
-                                    if ($prioriteit['id'] == $data['prioriteit_id']){echo " selected ";}
-                                    echo "value=\"".$prioriteit['id']."\">".$prioriteit['naam']."</option>";
-                                }
-                                ?>
+								<?php
+								foreach ($prioriteiten as $prioriteit){
+									echo "<option ";
+									if ($prioriteit['id'] == $data['prioriteit_id']){echo " selected ";}
+									echo "value=\"".$prioriteit['id']."\">".$prioriteit['naam']."</option>";
+								}
+								?>
 							</select>
 						</td>
 					</tr>
@@ -93,7 +93,7 @@ include '../templates/partials/menu.php';
 								?>
 							</select>
 
-                            <button form="f_close" class="btn btn-success">Opgelost</button>
+							<button form="f_close" class="btn btn-success">Opgelost</button>
 						</td>
 					</tr>
 					<tr>
@@ -111,53 +111,53 @@ include '../templates/partials/menu.php';
 							</select>
 						</td>
 					</tr>
-                    <tr>
-                        <td>Opmerking:</td>
-                        <td><textarea name="opmerking" cols="30" rows="5"><?php echo $data['beschrijving'];?></textarea></td>
-                    </tr>
-                    <tr>
-                        <td>Vergelijkbare Incidenten:</td>
-                        <td>
-                            <button class="btn btn-primary" type="button" data-toggle="collapse"
-                                    data-target="#incidentCollapse" aria-expanded="false" aria-controls="incidentCollapse"
-                            <?php if(empty($comparison)){ echo 'disabled';}?>> Toon </button>
+					<tr>
+						<td>Opmerking:</td>
+						<td><textarea name="opmerking" cols="30" rows="5"><?php echo $data['beschrijving'];?></textarea></td>
+					</tr>
+					<tr>
+						<td>Vergelijkbare Incidenten:</td>
+						<td>
+							<button class="btn btn-primary" type="button" data-toggle="collapse"
+							data-target="#incidentCollapse" aria-expanded="false" aria-controls="incidentCollapse"
+							<?php if(empty($comparison)){ echo 'disabled';}?>> Toon </button>
 
 
-                            <div class="collapse" id="incidentCollapse">
-                                <br/>
-                                <div class="well">
-                                    <table class="table table-responsive">
-                                        <tr class="panel-head">
-                                            <th>Id</th>
-                                            <th>Omschrijving</th>
-                                            <th>Workaround</th>
-                                            <th>Hardware Id</th>
-                                            <th>Software</th>
-                                            <th></th>
+							<div class="collapse" id="incidentCollapse">
+								<br/>
+								<div class="well">
+									<table class="table table-responsive">
+										<tr class="panel-head">
+											<th>Id</th>
+											<th>Omschrijving</th>
+											<th>Workaround</th>
+											<th>Hardware Id</th>
+											<th>Software</th>
+											<th></th>
 
-                                        </tr>
-                                        <?php foreach($comparison as $item){ ?>
+										</tr>
+										<?php foreach($comparison as $item){ ?>
 
-                                            <tr class="panel">
-                                                <td><?= $item['id']; ?></td>
-                                                <td><?= $item['omschrijving'];?></td>
-                                                <td><?= $item['workaround'];?></td>
-                                                <td><?= $item['hardware_id'];?></td>
-                                                <td><?= $item['uitgebreide_naam']?></td>
-                                                <td><a href="<?= $item['id'] ;?>" class="btn btn-default">Bekijk</a></td>
+										<tr class="panel">
+											<td><?= $item['id']; ?></td>
+											<td><?= $item['omschrijving'];?></td>
+											<td><?= $item['workaround'];?></td>
+											<td><?= $item['hardware_id'];?></td>
+											<td><?= $item['uitgebreide_naam']?></td>
+											<td><a href="<?= $item['id'] ;?>" class="btn btn-default">Bekijk</a></td>
 
-                                            </tr>
+										</tr>
 
 
 
-                                        <?php } ?>
+										<?php } ?>
 
-                                    </table>
-                                </div>
+									</table>
+								</div>
 
-                            </div>
-                        </td>
-                    </tr>
+							</div>
+						</td>
+					</tr>
 					<tr>
 						<td><a href="/incidents/all"><button class="btn btn-default" type="button" form="f_update">Terug</button></a></td>
 						<td><button class="btn btn-default" type="submit" form="f_update">Opslaan</button>  </td>
@@ -166,16 +166,12 @@ include '../templates/partials/menu.php';
 
 				</table>
 			</form>
-            <form action="/incidents/close" method="post" id="f_close">
-                <input type="hidden" name="id" value="<?php echo $data['id'];?>"/>
-            </form>
-
-
-
-
-
-
+			<form action="/incidents/close" method="post" id="f_close">
+				<input type="hidden" name="id" value="<?php echo $data['id'];?>"/>
+			</form>
 
 		</div><!-- end col 8 -->
+	</div>
+</div>
 
-		<?php include '../templates/partials/footer.php'; ?>
+<?php include '../templates/partials/footer.php'; ?>
