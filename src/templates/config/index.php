@@ -6,7 +6,13 @@ include '../templates/partials/menu.php';
 	<div class="row">
 		<?php include '../templates/partials/sidenav.php'; ?>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h2 class="sub-header">Hardware</h2>
+			<h2 class="sub-header">Hardware <a class="pull-right btn btn-success" href="/configs/hardware/create">Nieuwe hardware toevoegen</a></h2>
+			<?php if($flash['error']):?>
+				<p class="bg-danger"><?=$flash['error']?></p>
+			<?php endif;?>
+			<?php if($flash['success']):?>
+				<p class="bg-success"><?=$flash['success']?></p>
+			<?php endif;?>
 			<div class="table-responsive">
 				<table class="table table-striped">
 					<thead>
@@ -17,6 +23,7 @@ include '../templates/partials/menu.php';
 							<th>Merk</th>
 							<th>Locatie</th>
 							<th>Relatie</th>
+							<th>Actie</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -28,7 +35,7 @@ include '../templates/partials/menu.php';
 								<td><?=$hard['merk']?></td>
 								<td><?=$hard['locatie']?></td>
 								<td><?=$hard['relatie']?></td>
-								<td><a href="/configs/hardware/show/<?=$hard['id']?>" class="btn btn-success">Wijzigen</button></td>
+								<td><a href="/configs/hardware/show/<?=$hard['id']?>" class="btn btn-default">Wijzig</button></td>
 							</tr>
 						<?php endforeach; ?>
 

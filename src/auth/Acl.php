@@ -33,8 +33,13 @@ class Acl extends ZendAcl
 		$this->addResource('/incidents/update');
 		$this->addResource('/incident_update');
 		$this->addResource('/incident_new');
+
 		$this->addResource('/incidents/close');
 
+
+		$this->addResource('/questionnaire');
+		$this->addResource('/questionnaire/:id');
+		$this->addResource('/questionnaire_finished');
 
 		// User management
 		$this->addResource('/users/all');
@@ -43,13 +48,23 @@ class Acl extends ZendAcl
 		$this->addResource('/users/update');
 		$this->addResource('/users/delete');
 
-        // configs
-        $this->addResource('/configs/hardware/all');
-        $this->addResource('/configs/hardware/create');
-        $this->addResource('/configs/hardware/show/:id');
-        $this->addResource('/configs/hardware/update');
-        $this->addResource('/configs/hardware/delete');
+		// Configs
+		// Hardware
+		$this->addResource('/configs/hardware/all');
+		$this->addResource('/configs/hardware/create');
+		$this->addResource('/configs/hardware/show/:id');
+		$this->addResource('/configs/hardware/update');
+		// HARDWARE KAN NOG NIET WORDEN VERWIJDERD IN CONFIGS.PHP - ROELOF
+		$this->addResource('/configs/hardware/delete');
+		$this->addResource('/configs/hardware/attach');
+		$this->addResource('/configs/hardware/detach');
 
+		// Software
+		$this->addResource('/configs/software/all');
+		$this->addResource('/configs/software/create');
+		$this->addResource('/configs/software/show/:id');
+		$this->addResource('/configs/software/update');
+		$this->addResource('/configs/software/delete');
 
 		// APPLICATION PERMISSIONS
 		// Now we allow or deny a role's access to resources.
@@ -69,6 +84,10 @@ class Acl extends ZendAcl
         // Configs
 		$this->allow('member', '/bami', $this->defaultPrivilege);
 
+		// Vragenlijst
+		$this->allow('member', '/questionnaire', $this->defaultPrivilege);
+		$this->allow('member', '/questionnaire/:id', $this->defaultPrivilege);
+		$this->allow('member', '/questionnaire_finished', $this->defaultPrivilege);
 
 		// This allows admin access to everything
 		$this->allow('admin');

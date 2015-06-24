@@ -218,8 +218,14 @@ class Incident extends BaseModel {
         $stmt->execute(array(
             ':id' => $id
         ));
+    }
 
+    public function fetchOpenCount(){
+    	$query = "SELECT COUNT(*) as 'open' from incident WHERE status = 1";
 
+    	$stmt = $this->dbh->prepare($query);
+    	$stmt->execute();
+    	return $stmt->fetch();
     }
 
 }
