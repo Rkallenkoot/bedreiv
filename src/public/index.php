@@ -60,8 +60,9 @@ $app->hook('slim.before.dispatch', function () use ($app) {
 
 	$uri = $app->request()->getResourceUri();
 
+	// Deze aanpassen dat hij alleen incidenten van $identity['id'] ophaald.
 	$incident = new Incident();
-	$openstaand = $incident->fetchOpenCount();
+	$openstaand = $incident->fetchOpenCountByUserID($identity['id']);
 
 	$data = array(
 		'hasIdentity' => $hasIdentity,
