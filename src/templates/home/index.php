@@ -8,17 +8,21 @@ include '../templates/partials/menu.php';
 	<div class="row">
 		<?php include '../templates/partials/sidenav.php'; ?>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-		<h2 class="sub-header">Incidenten rapportage afgelopen maand</h2>
-			<div class="col-md-7">
+			<h2 class="sub-header">Incidenten rapportage afgelopen maand</h2>
+			<div class="col-md-6">
+				<h2 class="sub-header">Incidenten per Dag per Categorie</h2>
+				<canvas id="chartDate"></canvas>
 			</div>
-			<div class="col-md-5">
-				<h2 class="sub-header">Incidenten op Category</h2>
+			<div class="col-md-5 col-md-offset-1">
+				<h2 class="sub-header">Incidenten op Categorie</h2>
 				<div class="col-md-10">
-				<canvas id="chartCategory" height="150px"></canvas>
+					<canvas id="chartCategory" height="150px"></canvas>
 				</div>
 				<div id="categoryLegend" class="col-md-2">
 				</div>
 			</div>
+			<hr>
+			<?php // Hier kunnen we verder met meer stuff?>
 		</div>
 	</div>
 
@@ -83,8 +87,17 @@ include '../templates/partials/menu.php';
 		helpers.addEvent(legendHolder.firstChild, 'mouseout', function(){
 			chartCategory.draw();
 		});
-
 		document.getElementById('categoryLegend').appendChild(legendHolder.firstChild);
+	})();
+
+	(function(){
+		// Line chart
+		var helpers = Chart.helpers;
+		var data = <?=$chartDate?>;
+
+		var canvas = document.getElementById('chartDate');
+		var ctx = document.getElementById("chartDate").getContext("2d");
+		var dateChart = new Chart(ctx).Line(data, { multiTooltipTemplate: "<%= datasetLabel %> - <%= value %> incidenten", animation: false });
 	})();
 
 </script>

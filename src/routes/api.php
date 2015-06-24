@@ -24,6 +24,17 @@ $app->group('/api', function() use ($app){
 		echo json_encode($bami);
 	});
 
+	$app->get('/incidentDateCount', function() use ($app){
+		$dashboard = new Dashboard();
+		$incDateCount = $dashboard->getIncidentDateCount();
+
+		$bami = [];
+		// Color - highlight color
+		$colors['Netwerk'] = array("#F7464A","#FF5A5E");
+		$colors['Software'] = array("#FDB45C","#FFC870");
+		$colors['Hardware'] = array("#46BFBD","#5AD3D1");
+	});
+
 });
 
 ?>
